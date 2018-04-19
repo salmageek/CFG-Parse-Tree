@@ -1,2 +1,1 @@
-int i;
-float y;
+( x

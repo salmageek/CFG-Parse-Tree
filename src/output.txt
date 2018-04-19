@@ -1,7 +1,2 @@
-INT : int
-ID : i
-SEMICOLON : ;
-EOL : \n
-FLOAT : float
-ID : y
-SEMICOLON : ;
+LEFT_ROUND_B : (
+ID : x
