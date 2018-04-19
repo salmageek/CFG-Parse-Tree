@@ -1,1 +1,2 @@
-bla i;
+int i;
+float y;

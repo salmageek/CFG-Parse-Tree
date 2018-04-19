@@ -86,7 +86,7 @@ public class Tokenizer {
                 allMatches.get(i).value = "\\n";
             }
             writer.println(""+allMatches.get(i).token+" : " + allMatches.get(i).value);
-            System.out.println("" + allMatches.get(i).token + " : " + allMatches.get(i).value);
+//            System.out.println("" + allMatches.get(i).token + " : " + allMatches.get(i).value);
         }
         writer.close();
 
