@@ -1,4 +1,5 @@
 package Rules;
 
-public class Node {
+public interface Node {
+    public void printNode();
 }
