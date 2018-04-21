@@ -51,10 +51,11 @@ Statement ->  "{" ( Statement )* "}"
 			| if "(" Expression ")" Statement ElseStatement
 			| "while" "(" Expression ")" Statement
 			| "System.out.println" "(" Expression ")" ";"
-			| Identifier StatementDash
+			| Identifier StatementExpression
 
 ElseStatement -> else Statement | E
 
-StatementDash -> "=" Expression ";" | "[" Expression "]" "=" Expression ";"
+StatementExpression -> "=" Expression ";" | 
+					   "[" Expression "]" "=" Expression ";"
 
 Identifier ::= <IDENTIFIER>

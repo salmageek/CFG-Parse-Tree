@@ -108,99 +108,25 @@ public class Parser {
 
     public Identifier_R identifier() {
         Match token = queue.peek();
-
         if (token == null) {
-            System.out.println("Synatx Error! id null");
+            System.out.println("Synatx Error! Identifier-> <id> is null");
             return null;
         }
-        if (!token.token.equals("ID")) {
-            System.out.println("Synatx Error! wrong id");
-            return null;
+        if (token.token.equals("ID")){
+            queue.poll();
+            return new Identifier_R(token);
         }
-        queue.poll();
-        return new Identifier_R(token);
+        return null;
     }
 
 
     // ================== Expression ======================== //
 
-//    public Expression_R Expression() {
-//        Match token = queue.peek();
-//
-//        if (token == null) {
-//            System.out.println("Synatx Error! no expression!");
-//            return null;
-//        }
-//        if (token.token.equals("INTEGRAL_LITERAL") || token.token.equals("FLOAT_LITERAL") || token.token.equals("TRUE") || token.token.equals("FALSE") || token.token.equals("THIS")) {
-//            queue.poll();
-//            Expression2_R exp2 = Expression2();
-//            return new Expression_R(token, exp2);
-//        }
-//
-//        Identifier_R id = identifier();
-//        if (id != null) {
-//            System.out.println("YOU MUST BE HERE");
-//            Expression2_R exp2 = Expression2();
-//            if (exp2 == null) {
-//                System.out.println("Synax Error! no identifier in expression");
-//                return null;
-//            }
-//            return new Expression_R(id, exp2);
-//
-//        }
-//        if (token.token.equals("NEW")) {
-//            queue.poll();
-//            ExpressionNew_R exprNew = ExpressionNew();
-//            if (exprNew == null) {
-//                return null;
-//            }
-//            return new Expression_R(token, exprNew);
-//
-//        }
-//        if (token.token.equals("NOT")) {
-//            queue.poll();
-//            Expression_R expr = Expression();
-//            if (expr == null) {
-//                System.out.println("Synatx Error! exp null");
-//                return null;
-//            }
-//            Expression2_R expr2 = Expression2();
-//            if (expr2 == null) {
-//                System.out.println("Synatx Error! exp2 null");
-//                return null;
-//            }
-//            return new Expression_R(token, expr, expr2);
-//        }
-//        if (token.token.equals("LEFT_ROUND_B")) {
-//            queue.poll();
-//            Expression_R expr = Expression();
-//            if (expr == null) {
-//                System.out.println("Syntax Error! Expression is null");
-//                return null;
-//            }
-//            Match token2 = queue.peek();
-//            if (token2.token.equals("RIGHT_ROUND_B")) {
-//                queue.poll();
-//                Expression2_R expr2 = Expression2();
-//                if (expr2 == null) {
-//                    System.out.println("Synatx Error! Expression2 is null");
-//                    return null;
-//                }
-//                return new Expression_R(token, expr, token2, expr2);
-//
-//            } else {
-//                System.out.println("Syntax Error! no )");
-//                return null;
-//            }
-//        }
-//        return null;
-//    }
-
-
     public Expression_R expression() {
         Match token = queue.peek();
         if (token == null){
-            System.out.println("Syntax Error! expression is null");
+            // System.out.println("Syntax Error! no tokens in Expression");
+            /* Salma->expression can be called in a place where it can be null*/
             return null;
         }
         if (token.token.equals("INTEGRAL_LITERAL")){
@@ -208,132 +134,81 @@ public class Parser {
             Expression2_R expression2 = Expression2();
             return new Expression_R(token, expression2);
 
-//            if (expression2 != null){
-//                return new Expression_R(token, expression2);
-//            } else {
-//                System.out.println("Syntax Error! expression->int expression2 is null");
-//                return null;
-//            }
 
         } else if (token.token.equals("FLOAT_LITERAL")){
             queue.poll();
             Expression2_R expression2 = Expression2();
             return new Expression_R(token, expression2);
 
-//            if (expression2 != null){
-//                return new Expression_R(token, expression2);
-//            } else {
-//                System.out.println("Syntax Error! expression->float expression2 is null");
-//                return null;
-//            }
-
         } else if (token.token.equals("TRUE")){
             queue.poll();
             Expression2_R expression2 = Expression2();
             return new Expression_R(token, expression2);
-
-//            if (expression2 != null){
-//                return new Expression_R(token, expression2);
-//            } else {
-//                System.out.println("Syntax Error! expression->true expression2 is null");
-//                return null;
-//            }
 
         } else if (token.token.equals("FALSE")) {
             queue.poll();
             Expression2_R expression2 = Expression2();
             return new Expression_R(token, expression2);
 
-//            if (expression2 != null){
-//                return new Expression_R(token, expression2);
-//            } else {
-//                System.out.println("Syntax Error! expression->false expression2 is null");
-//                return null;
-//            }
 
         } else if (token.token.equals("THIS")) {
             queue.poll();
             Expression2_R expression2 = Expression2();
             return new Expression_R(token, expression2);
 
-//            if (expression2 != null){
-//                return new Expression_R(token, expression2);
-//            } else {
-//                System.out.println("Syntax Error! expression->this expression2 is null");
-//                return null;
-//            }
-
         } else if (token.token.equals("NEW")) {
             // TODO: check ExpressionNew function
             queue.poll();
             ExpressionNew_R expressionNew = ExpressionNew();
-            if (expressionNew != null){
-                return new Expression_R(token, expressionNew);
-            } else {
+            if (expressionNew == null){
                 System.out.println("Syntax Error! expression->new expressionNew is null");
                 return null;
             }
+            return new Expression_R(token, expressionNew);
 
         } else if (token.token.equals("NOT")) {
             queue.poll();
             Expression_R expression = expression();
-            if (expression != null){
-                Expression2_R expression2 = Expression2();
-                return new Expression_R(token, expression, expression2);
-
-//                if (expression2 != null){
-//                    return new Expression_R(token, expression, expression2);
-//                } else {
-//                    System.out.println("Syntax Error! expression->! expression2 is null");
-//                    return null;
-//                }
-            } else {
+            if (expression == null){
                 System.out.println("Syntax Error! expression->! expression is null");
                 return null;
             }
+            Expression2_R expression2 = Expression2();
+            return new Expression_R(token, expression, expression2);
 
         } else if (token.token.equals("LEFT_ROUND_B")) {
             queue.poll();
             Expression_R expression = expression();
-            if (expression != null){
-                Match token2 = queue.peek();
-                if (token2.token.equals("RIGHT_ROUND_B")){
-                    queue.poll();
-                    Expression2_R expression2 = Expression2();
-                    return new Expression_R(token, expression, token2, expression2);
-
-//                    if (expression2 != null){
-//                        return new Expression_R(token, expression, token2, expression2);
-//                    } else {
-//                        System.out.println("Syntax Error! expression->( expression2 is null");
-//                        return null;
-//                    }
-                } else {
-                    System.out.println("Syntax Error! expression->( ) is null");
-                    return null;
-                }
-            } else {
+            if (expression == null){
                 System.out.println("Syntax Error! expression->( expression is null");
                 return null;
             }
+
+            Match token2 = queue.peek();
+            if (token2 == null){
+                System.out.println("Syntax Error! expression->( ) is null");
+                return null;
+            }
+
+            if (token2.token.equals("RIGHT_ROUND_B")){
+                queue.poll();
+                Expression2_R expression2 = Expression2();
+                return new Expression_R(token, expression, token2, expression2);
+            } else {
+                System.out.println("Syntax Error! expression->( ) is missing");
+                return null;
+            }
+
 
         } else {
             Identifier_R id = identifier();
             if (id != null){
                 Expression2_R expression2 = Expression2();
                 return new Expression_R(id, expression2);
-
-//                if (expression2 != null){
-//                    return new Expression_R(id, expression2);
-//                } else {
-//                    System.out.println("Syntax Error! expression->id expression2 is null");
-//                    return null;
-//                }
-            } else {
-                System.out.println("Syntax Error! no valid expression rule");
-                return null;
             }
         }
+        System.out.println("no valid rule was found in expression");
+        return null;
     }
 
     public Expression1_R Expression1() {
@@ -341,7 +216,7 @@ public class Parser {
 
         if (token == null) {
             //System.out.println("Syntax Error!");
-            // because expression1 is called sometimes where it can be null but it is not an error!
+            /* Salma->because expression1 is called sometimes where it can be null but it is not an error! */
             return null;
         }
 
@@ -354,39 +229,40 @@ public class Parser {
             Expression_R expr = expression();
 
             if (expr == null) {
-                System.out.println("Syntax Error! expression in expression1 case 1 is null");
+                System.out.println("Syntax Error! Expression1->op Expression is null");
                 return null;
             }
-
             return new Expression1_R(token, expr);
+
+
         } else if (token.token.equals("LEFT_SQUARE_B")) {
             queue.poll();
+
             Expression_R expr = expression();
-
             if (expr == null) {
-
-                System.out.println("Syntax Error! Expression in expression1 case 2 is null");
+                System.out.println("Syntax Error! Expression1->[ Expression is null");
                 return null;
             }
 
             Match token2 = queue.peek();
-
             if (token2 == null) {
-                System.out.println("Syntax Error! ] is null in Expression1 in case 2");
+                System.out.println("Syntax Error! Expression1->[ ] is null");
                 return null;
-
             }
 
             if (token2.token.equals("RIGHT_SQUARE_B")) {
                 queue.poll();
                 return new Expression1_R(token, expr, token2);
+            } else {
+                System.out.println("Syntax Error! Expression1->[ ] is missing");
+                return null;
             }
+
         } else if (token.token.equals("DOT")) {
             queue.poll();
             ExpressionDot_R expr = ExpressionDot();
             if (expr == null) {
-
-                System.out.println("Syntax Error! ExpressionDot in Expression1 is null");
+                System.out.println("Syntax Error! Expression1->. ExpressionDot is null");
                 return null;
             }
             return new Expression1_R(token, expr);
@@ -401,15 +277,7 @@ public class Parser {
         if (expr1 != null) {
             Expression2_R expr2 = Expression2();
             return new Expression2_R(expr1, expr2);
-
-//            if (expr2 != null) {
-//                return new Expression2_R(expr1, expr2);
-//            } else {
-//                System.out.println("Syntax Error! Expression2 is null");
-//                return null;
-//            }
         }
-
         return null;
     }
 
@@ -417,105 +285,114 @@ public class Parser {
         Match token = queue.peek();
 
         if (token == null) {
-            System.out.println("Syntax Error! Expression Dot is null");
+            System.out.println("Syntax Error! ExpressionDot-> no tokens left!");
             return null;
         }
 
         if (token.token.equals("LENGTH")) {
-
             queue.poll();
             return new ExpressionDot_R(token);
-        }
 
-        Identifier_R id = identifier();
+        } else {
 
-        if (id == null) {
-            System.out.println("Syntax Error! identifier in ExpressionDot is null");
-            return null;
-        }
-
-        Match token2 = queue.peek();
-        ArrayList<ExpressionDot_R> exprDots;
-        exprDots = new ArrayList();
-
-        if (token2 == null) {
-            System.out.println("Syntax Error! ( in ExpressionDot is null");
-            return null;
-        }
-
-
-        if (token2.token.equals("LEFT_ROUND_B")) {
-            queue.poll();
-
-            Expression_R expr = expression();
-            if (expr == null) {
-
-                Match token4 = queue.peek();
-                if (token4 == null) {
-                    System.out.println("Syntax Error! ) in expressionDot is null");
-                    return null;
-
-                }
-
-                if (token4.token.equals("RIGHT_ROUND_B")) {
-                    queue.poll();
-                    return new ExpressionDot_R(id, token2, token4);
-                }
-
-            }
-
-            Match token3 = queue.peek();
-            if (token3 == null) { //not found Comma
-
-                Match token4 = queue.peek();
-                if (token4 == null) {
-                    System.out.println("Syntax Error! ) in expressionDot is null");
-                    return null;
-
-                }
-
-                if (token4.token.equals("RIGHT_ROUND_B")) {
-                    queue.poll();
-                    return new ExpressionDot_R(id, token2, expr, token4);
-                }
-
-            }
-
-            while (token3.token.equals("COMMA")) {
-
-                queue.poll();
-                Expression_R expr1 = expression();
-
-                if (expr1 == null) {
-                    System.out.println("Syntax Error! expression after , in expression dot is null");
-                    return null;
-                }
-
-                ExpressionDot_R exprDot = new ExpressionDot_R(token3, expr1);
-                exprDots.add(exprDot);
-
-                token3 = queue.peek();
-                if (token3 == null) break;
-
-            }
-
-            Match token4 = queue.peek();
-            if (token4 == null) {// right round brackt not found
-                System.out.println("Syntax Error! ) not found in expression dot");
+            Identifier_R id = identifier();
+            if (id == null) {
+                System.out.println("Syntax Error! ExpressionDot->id Identifier is null");
                 return null;
             }
 
-            if (token4.token.equals("RIGHT_ROUND_B")) {
-                queue.poll();
-                return new ExpressionDot_R(id, token, expr, exprDots, token4);
+            Match token2 = queue.peek();
+            if (token2 == null) {
+                System.out.println("Syntax Error! ExpressionDot->id ( is null");
+                return null;
             }
 
+            if (token2.token.equals("LEFT_ROUND_B")) {
+                queue.poll();
+
+                Expression_R expr = expression();
+
+                // identifier ()
+                if (expr == null) {
+
+                    Match token4 = queue.peek();
+                    if (token4 == null) {
+                        System.out.println("Syntax Error! ExpressionDot->id( ) is null");
+                        return null;
+
+                    }
+
+                    if (token4.token.equals("RIGHT_ROUND_B")) {
+                        queue.poll();
+                        return new ExpressionDot_R(id, token2, token4);
+                    } else {
+                        System.out.println("Syntax Error! ExpressionDot->id( ) is missing");
+                        return null;
+                    }
+
+                }
+
+                // identifier (Expression)
+                Match token3 = queue.peek();
+                if (token3 == null) {   //no Comma
+                    Match token4 = queue.peek();
+                    if (token4 == null) {
+                        System.out.println("Syntax Error! ExpressionDot->id(Expression ) is null");
+                        return null;
+
+                    }
+
+                    if (token4.token.equals("RIGHT_ROUND_B")) {
+                        queue.poll();
+                        return new ExpressionDot_R(id, token2, expr, token4);
+                    } else {
+                        System.out.println("Syntax Error! ExpressionDot->id(Expression ) is missing");
+                        return null;
+                    }
+                }
+
+                // identifier(Expression, Expression, ..etc)
+                ArrayList<ExpressionDot_R> exprDots = new ArrayList<>();
+
+                while (token3.token.equals("COMMA")) {
+                    queue.poll();
+
+                    Expression_R expr1 = expression();
+                    if (expr1 == null) {
+                        System.out.println("Syntax Error! ExpressionDot->id(Expression, Expression is null");
+                        return null;
+                    }
+
+                    ExpressionDot_R exprDot = new ExpressionDot_R(token3, expr1);
+                    exprDots.add(exprDot);
+
+                    token3 = queue.peek();
+                    if (token3 == null)
+                        break;
+                }
+
+                Match token4 = queue.peek();
+                if (token4 == null) { // right round bracket not found
+                    System.out.println("Syntax Error! ExpressionDot->id(Expression,Expression ) is null");
+                    return null;
+                }
+
+                if (token4.token.equals("RIGHT_ROUND_B")) {
+                    queue.poll();
+                    return new ExpressionDot_R(id, token, expr, exprDots, token4);
+                } else {
+                    System.out.println("Syntax Error! ExpressionDot->id(Expression,Expression ) is null");
+                    return null;
+                }
+
+            }
         }
 
         return null;
     }
 
     public ExpressionNew_R ExpressionNew() {
+
         Match token = queue.peek();
         if (token == null) {
             System.out.println("Syntax Error! data type in Expression new is null");
@@ -526,29 +403,131 @@ public class Parser {
             queue.poll();
             Match token2 = queue.peek();
             if (token2 == null) {
-                System.out.println("Syntax Error! [  in Expression new is null");
+                System.out.println("Syntax Error! ExpressionNew->type [ is null");
                 return null;
             }
 
             if (token2.token.equals("LEFT_SQUARE_B")) {
                 queue.poll();
+
                 Expression_R expr = expression();
                 if (expr == null) {
-                    System.out.println("Syntax Error! Expression  in Expression new is null");
+                    System.out.println("Syntax Error! ExpressionNew->type[ Expression is null");
                     return null;
                 }
+
                 Match token3 = queue.peek();
                 if (token3 == null) {
-                    System.out.println("Syntax Error! ]  in Expression new is null");
+                    System.out.println("Syntax Error! ExpressionNew->type[Expression ] is null");
                     return null;
                 }
                 if (token3.token.equals("RIGHT_SQUARE_B")) {
                     queue.poll();
-                    Expression2_R expr2 = Expression2();
-                    if (expr2 == null) {
-                        System.out.println("Syntax Error! Expression2  in Expression new is null");
+
+                    Expression2_R expr2 = Expression2(); // can be null
+                    return new ExpressionNew_R(token, token2, expr, token3, expr2);
+
+                } else {
+                    System.out.println("Syntax Error! ExpressionNew->type[Expression ] is missing");
+                    return null;
+                }
+            } else {
+                System.out.println("Syntax Error! ExpressionNew->type [ is missing");
+                return null;
+            }
+
+        } else {
+
+            Identifier_R id = identifier();
+            if (id == null) {
+                System.out.println("Syntax Error! ExpressionNew->id Identifier is null");
+                return null;
+            }
+
+            Match token2 = queue.peek();
+            if (token2 == null) {
+                System.out.println("Syntax Error! ExpressionNew->id ( is null");
+                return null;
+            }
+
+            if (token2.token.equals("LEFT_ROUND_B")) {
+                queue.poll();
+
+                Expression_R expr = expression();
+
+                // identifier ()
+                if (expr == null) {
+
+                    Match token4 = queue.peek();
+                    if (token4 == null) {
+                        System.out.println("Syntax Error! ExpressionNew->id( ) is null");
                         return null;
                     }
+
+                    if (token4.token.equals("RIGHT_ROUND_B")) {
+                        queue.poll();
+
+                        Expression2_R expression2 = Expression2();
+                        return new ExpressionNew_R(id, token2, token4, expression2);
+                    } else {
+                        System.out.println("Syntax Error! ExpressionNew->id( ) is missing");
+                        return null;
+                    }
+
+                }
+
+                // identifier (Expression)
+                Match token3 = queue.peek();
+                if (token3 == null) {   //no Comma
+                    Match token4 = queue.peek();
+                    if (token4 == null) {
+                        System.out.println("Syntax Error! ExpressionNew->id(Expression ) is null");
+                        return null;
+                    }
+
+                    if (token4.token.equals("RIGHT_ROUND_B")) {
+                        queue.poll();
+                        Expression2_R expression2 = Expression2();
+                        return new ExpressionNew_R(id, token2, expr, token4, expression2);
+                    } else {
+                        System.out.println("Syntax Error! ExpressionNew->id(Expression ) is missing");
+                        return null;
+                    }
+                }
+
+                // identifier(Expression, Expression, ..etc)
+                ArrayList<ExpressionNew_R> exprNews = new ArrayList<>();
+
+                while (token3.token.equals("COMMA")) {
+                    queue.poll();
+
+                    Expression_R expr1 = expression();
+                    if (expr1 == null) {
+                        System.out.println("Syntax Error! ExpressionNew->id(Expression, Expression is null");
+                        return null;
+                    }
+
+                    ExpressionNew_R exprNew = new ExpressionNew_R(token3, expr1);
+                    exprNews.add(exprNew);
+
+                    token3 = queue.peek();
+                    if (token3 == null)
+                        break;
+                }
+
+                Match token4 = queue.peek();
+                if (token4 == null) { // right round bracket not found
+                    System.out.println("Syntax Error! ExpressionNew->id(Expression,Expression ) is null");
+                    return null;
+                }
+
+                if (token4.token.equals("RIGHT_ROUND_B")) {
+                    queue.poll();
+                    Expression2_R expression2 = Expression2();
+                    return new ExpressionNew_R(id, token, expr, exprNews, token4, expression2);
+                } else {
+                    System.out.println("Syntax Error! ExpressionNew->id(Expression,Expression ) is null");
+                    return null;
                 }
 
             }
@@ -561,9 +540,13 @@ public class Parser {
 
     public Statement_R statement() {
         Match token = queue.peek();
+        if (token == null){
+            System.out.println("no tokens left in Statement");
+            return null;
+        }
+
         if (token.token.equals("LEFT_CURLY_B")) {
             queue.poll();
-
             ArrayList<Statement_R> statements = new ArrayList<>();
 
             Statement_R statement = statement();
@@ -573,17 +556,26 @@ public class Parser {
             }
 
             Match token2 = queue.peek();
-            if (token2.token.equals("}")) {
+            if (token2 == null){
+                System.out.println("Syntax Error! Statement->{statements* } is null");
+                return null;
+            }
+            if (token2.token.equals("RIGHT_CURLY_B")) {
                 queue.poll();
                 return new Statement_R(token, statements, token2);
             } else {
-                System.out.println("Syntax Error! Statement has no }");
+                System.out.println(token2.value);
+                System.out.println("Syntax Error! Statement->{statements* } is missing");
                 return null;
             }
 
         } else if (token.token.equals("IF") || token.token.equals("WHILE") || token.token.equals("SYSTEM.OUT.PRINTLN")) {
             queue.poll();
             Match token2 = queue.peek();
+            if (token2 == null){
+                System.out.println("Syntax Error! Statement->if/while/sout ( is null");
+                return null;
+            }
 
             if (token2.token.equals("LEFT_ROUND_B")) {
                 queue.poll();
@@ -592,17 +584,25 @@ public class Parser {
                 if (expression != null) {
                     Match token3 = queue.peek();
 
+                    if (token3 == null){
+                        System.out.println("Syntax Error! Statement->if/while/sout(Expression ) is null");
+                        return null;
+                    }
                     if (token3.token.equals("RIGHT_ROUND_B")) {
                         queue.poll();
 
                         if (token.token.equals("SYSTEM.OUT.PRINTLN")) {
                             Match token4 = queue.peek();
 
+                            if (token4 == null){
+                                System.out.println("Syntax Error! Statement->SOUT(Expression) ; is null");
+                                return null;
+                            }
                             if (token4.token.equals("SEMICOLON")) {
                                 queue.poll();
                                 return new Statement_R(token, token2, expression, token3, token4);
                             } else {
-                                System.out.println("Syntax Error! Statement->SOUT no ;");
+                                System.out.println("Syntax Error! SOUT(Expression) ; is missing");
                                 return null;
                             }
 
@@ -619,57 +619,64 @@ public class Parser {
 
 
                             } else {
-                                System.out.println("Syntax Error! statement->if/while no Statement");
+                                System.out.println("Syntax Error! statement->if/while(Expression) Statement is null");
                                 return null;
                             }
                         }
                     } else {
-                        System.out.println("Syntax Error! statement no )");
+                        System.out.println("Syntax Error! if/while/sout(Expression ) is missing");
                         return null;
                     }
                 } else {
-                    System.out.println("Syntax Error! statement no Expression");
+                    System.out.println("Syntax Error! Statement->if/while/sout( Expression is null");
                     return null;
                 }
             } else {
-                System.out.println("Syntax Error! statement no (");
+                System.out.println("Syntax Error! Statement->if/while/sout ( is missing");
                 return null;
             }
 
 
         } else {
             Identifier_R id = identifier();
-            if (id == null) {
-                System.out.println("Syntax Error! no Statement!");
-                return null;
+            if (id != null) {
+                StatementExpression_R statementExpr = statementExpr();
+                if (statementExpr == null) {
+                    System.out.println("Statement->Identifier StatementExpression is null");
+                    return null;
+                }
+                return new Statement_R(id, statementExpr);
             }
-            StatementExpression_R statementExpr = statementExpr();
-            if (statementExpr == null) {
-                System.out.println("Statement->Identifier has no statementDash");
-                return null;
-            }
-            return new Statement_R(id, statementExpr);
         }
+        System.out.println("no valid rule was found in Statement");
         return null;
     }
 
     private StatementExpression_R statementExpr() {
         Match token = queue.peek();
-        if (token.token.equals("=")) {
+        if (token == null){
+            System.out.println("Syntax Error! no tokens left in StatementExpression");
+            return null;
+        }
+        if (token.token.equals("ASSIGNMENT")) {
             queue.poll();
 
             Expression_R expression = expression();
             if (expression != null) {
                 Match token2 = queue.peek();
-                if (token2.token.equals(";")) {
+                if (token2 == null){
+                    System.out.println("Syntax Error! StatementExpr->=Expression ; is null");
+                    return null;
+                }
+                if (token2.token.equals("SEMICOLON")) {
                     queue.poll();
                     return new StatementExpression_R(token, expression, token2);
                 } else {
-                    System.out.println("StatementExpression has no ;");
+                    System.out.println("Syntax Error! StatementExpr->=Expression ; is missing");
                     return null;
                 }
             } else {
-                System.out.println("Syntax Error! StatementExpr has no Expression");
+                System.out.println("Syntax Error! StatementExpr->=Expression is null");
                 return null;
             }
 
@@ -680,54 +687,70 @@ public class Parser {
             if (expression != null) {
                 Match token2 = queue.peek();
 
-                if (token2.token.equals("RIGHT_SQUARE")) {
+                if (token2 == null) {
+                    System.out.println("Syntax Error! StatementExpr->=[Expression ] is null");
+                    return null;
+                }
+                if (token2.token.equals("RIGHT_SQUARE_B")) {
                     queue.poll();
-                    Match token3 = queue.peek();
 
-                    if (token3.token.equals("EQUAL")) {
+                    Match token3 = queue.peek();
+                    if (token3 == null){
+                        System.out.println("Syntax Error! StatementExpr->=[Expression] = is null");
+                        return null;
+                    }
+
+                    if (token3.token.equals("ASSIGNMENT")) {
                         queue.poll();
 
                         Expression_R expression2 = expression();
                         if (expression2 != null) {
 
                             Match token4 = queue.peek();
-                            if (token2.token.equals("SEMICOLON")) {
+                            if (token4 == null){
+                                System.out.println("Syntax Error! StatementExpr->=[Expression]=Expression ; is null");
+                                return null;
+                            }
+                            if (token4.token.equals("SEMICOLON")) {
                                 queue.poll();
                                 return new StatementExpression_R(token, expression, token2, token3, expression2, token4);
 
                             } else {
-                                System.out.println("StatementExpression has no ;");
+                                System.out.println("Syntax Error! StatementExpr->=[Expression]=Expression ; is missing");
                                 return null;
                             }
                         } else {
-                            System.out.println("Syntax Error! StatementExpr has no Expression2");
+                            System.out.println("Syntax Error! StatementExpr->=[Expression]=Expression is null");
                             return null;
                         }
                     } else {
-                        System.out.println("StatementExpression has no =");
+                        System.out.println("Syntax Error! StatementExpr->=[Expression] = is missing");
                         return null;
                     }
                 } else {
-                    System.out.println("StatementExpression has no ]");
+                    System.out.println("Syntax Error! StatementExpr->=[Expression ] is missing");
                     return null;
                 }
             } else {
-                System.out.println("Syntax Error! StatementExpr has no Expression");
+                System.out.println("Syntax Error! StatementExpr->[ Expression is null");
                 return null;
             }
 
         }
-        System.out.println("Syntax Error! no StatementExpression");
+        System.out.println("no valid rule was found in StatementExpression");
         return null;
     }
 
     private ElseStatement_R elseStatement() {
         Match token = queue.peek();
+        if (token == null){
+            return null;
+        }
         if (token.token.equals("ELSE")) {
             queue.poll();
             Statement_R statement = statement();
             if (statement == null) {
-                System.out.println("Syntax Error! ElseStatement has no Statement");
+                System.out.println("Syntax Error! ElseStatement->else Statement is null");
                 return null;
             }
             return new ElseStatement_R(token, statement);
@@ -743,7 +766,9 @@ public class Parser {
 //        VarDeclaration_R root = p.varDeclaration();
 //        root.printNode();
 
-        Expression_R exp = p.expression();
+//        Expression_R exp = p.expression();
+
+        Statement_R stmt = p.statement();
         System.out.println("horay");
     }
 }
