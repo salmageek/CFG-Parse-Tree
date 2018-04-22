@@ -2,8 +2,6 @@ package Rules;
 
 import LexicalAnalyzer.Match;
 import LexicalAnalyzer.Tokenizer;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -19,6 +17,7 @@ public class Parser {
     }
 
     public Parser() {
+
         this.queue = new LinkedList<>();
     }
 
@@ -121,7 +120,6 @@ public class Parser {
         }
         return null;
     }
-
 
     // ================== Expression ======================== //
 
@@ -294,7 +292,7 @@ public class Parser {
 
         if (token.token.equals("LENGTH")) {
             queue.poll();
-            return new ExpressionDot_R(token);
+            return new ExpressionDot_R(token, "length");
 
         } else {
 
@@ -327,7 +325,7 @@ public class Parser {
 
                     if (token4.token.equals("RIGHT_ROUND_B")) {
                         queue.poll();
-                        return new ExpressionDot_R(id, token2, token4);
+                        return new ExpressionDot_R(id, token2, token4, "no expressions");
                     } else {
                         System.out.println("Syntax Error! ExpressionDot->id( ) is missing");
                         return null;
@@ -347,7 +345,7 @@ public class Parser {
 
                     if (token4.token.equals("RIGHT_ROUND_B")) {
                         queue.poll();
-                        return new ExpressionDot_R(id, token2, expr, token4);
+                        return new ExpressionDot_R(id, token2, expr, token4, "one expression");
                     } else {
                         System.out.println("Syntax Error! ExpressionDot->id(Expression ) is missing");
                         return null;
@@ -382,7 +380,7 @@ public class Parser {
 
                 if (token4.token.equals("RIGHT_ROUND_B")) {
                     queue.poll();
-                    return new ExpressionDot_R(id, token, expr, exprDots, token4);
+                    return new ExpressionDot_R(id, token, expr, exprDots, token4, "many expressions");
                 } else {
                     System.out.println("Syntax Error! ExpressionDot->id(Expression,Expression ) is null");
                     return null;
@@ -428,7 +426,7 @@ public class Parser {
                     queue.poll();
 
                     Expression2_R expr2 = Expression2(); // can be null
-                    return new ExpressionNew_R(token, token2, expr, token3, expr2);
+                    return new ExpressionNew_R(token, token2, expr, token3, expr2, "expr1");
 
                 } else {
                     System.out.println("Syntax Error! ExpressionNew->type[Expression ] is missing");
@@ -471,7 +469,7 @@ public class Parser {
                         queue.poll();
 
                         Expression2_R expression2 = Expression2();
-                        return new ExpressionNew_R(id, token2, token4, expression2);
+                        return new ExpressionNew_R(id, token2, token4, expression2, "no expression");
                     } else {
                         System.out.println("Syntax Error! ExpressionNew->id( ) is missing");
                         return null;
@@ -491,7 +489,7 @@ public class Parser {
                     if (token4.token.equals("RIGHT_ROUND_B")) {
                         queue.poll();
                         Expression2_R expression2 = Expression2();
-                        return new ExpressionNew_R(id, token2, expr, token4, expression2);
+                        return new ExpressionNew_R(id, token2, expr, token4, expression2, "one expression");
                     } else {
                         System.out.println("Syntax Error! ExpressionNew->id(Expression ) is missing");
                         return null;
@@ -527,7 +525,7 @@ public class Parser {
                 if (token4.token.equals("RIGHT_ROUND_B")) {
                     queue.poll();
                     Expression2_R expression2 = Expression2();
-                    return new ExpressionNew_R(id, token, expr, exprNews, token4, expression2);
+                    return new ExpressionNew_R(id, token, expr, exprNews, token4, expression2, "many expressions");
                 } else {
                     System.out.println("Syntax Error! ExpressionNew->id(Expression,Expression ) is null");
                     return null;
@@ -565,7 +563,7 @@ public class Parser {
             }
             if (token2.token.equals("RIGHT_CURLY_B")) {
                 queue.poll();
-                return new Statement_R(token, statements, token2);
+                return new Statement_R(token, statements, token2, "statements");
             } else {
                 System.out.println(token2.value);
                 System.out.println("Syntax Error! Statement->{statements* } is missing");
@@ -603,7 +601,7 @@ public class Parser {
                             }
                             if (token4.token.equals("SEMICOLON")) {
                                 queue.poll();
-                                return new Statement_R(token, token2, expression, token3, token4);
+                                return new Statement_R(token, token2, expression, token3, token4, "print statement");
                             } else {
                                 System.out.println("Syntax Error! SOUT(Expression) ; is missing");
                                 return null;
@@ -615,9 +613,9 @@ public class Parser {
                             if (statement != null) {
                                 if (token.token.equals("IF")) {
                                     ElseStatement_R elseStatement = elseStatement();
-                                    return new Statement_R(token, token2, expression, token3, statement, elseStatement); // if not null but error?
+                                    return new Statement_R(token, token2, expression, token3, statement, elseStatement, "if statement");
                                 } else if (token.token.equals("WHILE")) {
-                                    return new Statement_R(token, token2, expression, token3, statement);
+                                    return new Statement_R(token, token2, expression, token3, statement, "while statement");
                                 }
 
 
@@ -648,7 +646,7 @@ public class Parser {
                     System.out.println("Statement->Identifier StatementExpression is null");
                     return null;
                 }
-                return new Statement_R(id, statementExpr);
+                return new Statement_R(id, statementExpr, "id statement");
             }
         }
         System.out.println("no valid rule was found in Statement");
@@ -673,7 +671,7 @@ public class Parser {
                 }
                 if (token2.token.equals("SEMICOLON")) {
                     queue.poll();
-                    return new StatementExpression_R(token, expression, token2);
+                    return new StatementExpression_R(token, expression, token2, "expr1");
                 } else {
                     System.out.println("Syntax Error! StatementExpr->=Expression ; is missing");
                     return null;
@@ -716,7 +714,7 @@ public class Parser {
                             }
                             if (token4.token.equals("SEMICOLON")) {
                                 queue.poll();
-                                return new StatementExpression_R(token, expression, token2, token3, expression2, token4);
+                                return new StatementExpression_R(token, expression, token2, token3, expression2, token4, "expr2");
 
                             } else {
                                 System.out.println("Syntax Error! StatementExpr->=[Expression]=Expression ; is missing");
@@ -1083,6 +1081,8 @@ public class Parser {
         }
         return new ClassDeclaration_R(token,id,token2,varDeclarations,constructorDeclarations,methodDeclarations,token3);
     }
+
+
     public MainClass_R mainClass(){//missing mean that it can be anything :"D
 
         Match token = queue.peek();//should peek class
@@ -1302,6 +1302,7 @@ public class Parser {
         System.out.println("Syntax Error! class in main class is missing");
         return null;
     }
+
     public Goal_R goal(){
         MainClass_R mainClass = mainClass();
         if(mainClass == null){
@@ -1349,18 +1350,20 @@ public class Parser {
 
 
 
-
-
     public static void main(String[] args) throws FileNotFoundException {
         Parser p = new Parser();
         p.loadTokens();
 
-//        VarDeclaration_R root = p.varDeclaration();
-//        root.printNode();
+        VarDeclaration_R root = p.varDeclaration();
+
+        if (root != null)
+            root.printNode();
 
 //        Expression_R exp = p.expression();
 
 //        Statement_R stmt = p.statement();
+//        stmt.printNode();
+        System.out.println("horay");
 //        System.out.println("horay");
 //        System.out.println("=======================================");
 //        MethodDeclaration_R method = p.methodDeclaration();

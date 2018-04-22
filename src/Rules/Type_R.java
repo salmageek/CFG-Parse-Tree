@@ -12,21 +12,8 @@ public class Type_R implements Node {
 
     @Override
     public void printNode() {
-        System.out.print("Type:- ");
-        if (dateType != null)
-            System.out.print("<DataType> ");
+        dateType.printNode();
         if (array_ != null)
-            System.out.print("<Array> ");
-        System.out.println();
-
-        if (this.dateType == null)
-            System.out.println("DataType: null");
-        else
-            dateType.printNode();
-
-        if (this.array_ == null)
-            System.out.println("Array: null");
-        else
             array_.printNode();
     }
 }
