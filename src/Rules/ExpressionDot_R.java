@@ -70,11 +70,11 @@ public class ExpressionDot_R implements Node {
 
         } else if (type.equals("many expressions")) {
             identifier.printNode();
-            System.out.println(token1.value);
+            System.out.print(token1.value);
             expression.printNode();
             for (int i = 0; i < exprDots.size(); i++) {
                 ExpressionDot_R expr = exprDots.get(i);
-                System.out.println(expr.token1 + " ");
+                System.out.print(expr.token1 + " ");
                 expr.expression.printNode();
             }
             System.out.println(token2.value);

@@ -12,9 +12,9 @@ public class ClassDeclaration_R {
     Match extend;
     Identifier_R identifier2;
     Match LEFT_CURLY_B;
-    ArrayList<VarDeclaration_R> varDeclarations =new ArrayList<>();
-    ArrayList<ConstructorDeclaration_R> constructorDeclarations =new ArrayList<>();
-    ArrayList<MethodDeclaration_R> methodDeclarations =new ArrayList<>();
+    ArrayList<VarDeclaration_R> varDeclarations = new ArrayList<>();
+    ArrayList<ConstructorDeclaration_R> constructorDeclarations = new ArrayList<>();
+    ArrayList<MethodDeclaration_R> methodDeclarations = new ArrayList<>();
     Match RIGHT_CURLY_B;
 
     public ClassDeclaration_R(Match class_, Identifier_R identifier1, Match extend, Identifier_R identifier2, Match LEFT_CURLY_B, ArrayList<VarDeclaration_R> varDeclarations, ArrayList<ConstructorDeclaration_R> constructorDeclarations, ArrayList<MethodDeclaration_R> methodDeclarations, Match RIGHT_CURLY_B) {

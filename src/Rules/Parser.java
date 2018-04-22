@@ -2,8 +2,6 @@ package Rules;
 
 import LexicalAnalyzer.Match;
 import LexicalAnalyzer.Tokenizer;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -122,7 +120,6 @@ public class Parser {
         }
         return null;
     }
-
 
     // ================== Expression ======================== //
 
@@ -1084,6 +1081,8 @@ public class Parser {
         }
         return new ClassDeclaration_R(token,id,token2,varDeclarations,constructorDeclarations,methodDeclarations,token3);
     }
+
+
     public MainClass_R mainClass(){//missing mean that it can be anything :"D
 
         Match token = queue.peek();//should peek class
@@ -1303,6 +1302,7 @@ public class Parser {
         System.out.println("Syntax Error! class in main class is missing");
         return null;
     }
+
     public Goal_R goal(){
         MainClass_R mainClass = mainClass();
         if(mainClass == null){
@@ -1347,8 +1347,6 @@ public class Parser {
 
         return null;
     }
-
-
 
 
 

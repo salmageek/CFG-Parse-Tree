@@ -50,7 +50,6 @@ public class ExpressionNew_R implements Node {
     }
 
 
-
     public ExpressionNew_R(Identifier_R id, Match token, Expression_R expr, ArrayList<ExpressionNew_R> exprNews, Match token4, Expression2_R expression2, String type) {
         this.token1 = token;
         this.token2 = token4;
@@ -62,9 +61,48 @@ public class ExpressionNew_R implements Node {
     }
 
     @Override
-    public void printNode(){
-        if (type.equals("expr1")){
+    public void printNode() {
+        if (type.equals("expr1")) {
+            System.out.print(token1.value + token2.value);
+            expression1.printNode();
+            System.out.print(token3.value);
+            if (expression2_1 != null)
+                expression2_1.printNode();
+            else
+                System.out.println();
 
+        } else if (type.equals("no expression")) {
+            identifier.printNode();
+            System.out.print(token1.value + token2.value);
+            if (expression2_1 != null)
+                expression2_1.printNode();
+            else
+                System.out.println();
+
+        } else if (type.equals("one expression")) {
+            identifier.printNode();
+            System.out.print(token1.value);
+            expression1.printNode();
+            System.out.print(token2.value);
+            if (expression2_1 != null)
+                expression2_1.printNode();
+            else
+                System.out.println();
+
+        } else if (type.equals("many expressions")) {
+            identifier.printNode();
+            System.out.print(token1.value);
+            expression1.printNode();
+            for (int i = 0; i < commaExpression.size(); i++) {
+                ExpressionNew_R expr = commaExpression.get(i);
+                System.out.print(expr.token1 + " ");
+                expr.expression1.printNode();
+            }
+            System.out.print(token2.value);
+            if (expression2_1 != null)
+                expression2_1.printNode();
+            else
+                System.out.println();
         }
     }
 }
