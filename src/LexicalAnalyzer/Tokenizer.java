@@ -11,9 +11,9 @@ public class Tokenizer {
 
     public static void runTokenizer() throws FileNotFoundException {
 
-        String target = new Scanner(new File("C:\\Users\\Lenovo\\IdeaProjects\\Compilers Phase 2\\src\\input.txt")).useDelimiter("\\Z").next();
+        String target = new Scanner(new File("E:\\FOURTH YEAR\\second semester\\compilers\\project1\\CFG-Parse-Tree-1\\src\\input.txt")).useDelimiter("\\Z").next();
 
-        Scanner s = new Scanner(new File("C:\\Users\\Lenovo\\IdeaProjects\\Compilers Phase 2\\src\\LexicalAnalyzer\\RE.txt"));
+        Scanner s = new Scanner(new File("E:\\FOURTH YEAR\\second semester\\compilers\\project1\\CFG-Parse-Tree-1\\src\\LexicalAnalyzer\\RE.txt"));
 
         ArrayList<Match> matches = new ArrayList<>();
         ArrayList<Match> allMatches = new ArrayList<>();
@@ -69,7 +69,7 @@ public class Tokenizer {
         }
 
         allMatches.sort((Match o1, Match o2) -> o1.startPosition - o2.startPosition);
-        PrintWriter writer = new PrintWriter("C:\\Users\\Lenovo\\IdeaProjects\\Compilers Phase 2\\src\\output.txt");
+        PrintWriter writer = new PrintWriter("E:\\FOURTH YEAR\\second semester\\compilers\\project1\\CFG-Parse-Tree-1\\src\\output.txt");
 
         for (int i = 0; i < allMatches.size(); i++) {
 
@@ -88,6 +88,7 @@ public class Tokenizer {
             writer.println(""+allMatches.get(i).token+" : " + allMatches.get(i).value);
 //            System.out.println("" + allMatches.get(i).token + " : " + allMatches.get(i).value);
         }
+        writer.println("EOF "+": "+"eof");
         writer.close();
 
         String temp = target;

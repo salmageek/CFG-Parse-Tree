@@ -28,7 +28,7 @@ public class Parser {
         Tokenizer t = new Tokenizer();
         t.runTokenizer();
 
-        Scanner scanner = new Scanner(new File("C:\\Users\\Lenovo\\IdeaProjects\\Compilers Phase 2\\src\\output.txt"));
+        Scanner scanner = new Scanner(new File("E:\\FOURTH YEAR\\second semester\\compilers\\project1\\CFG-Parse-Tree-1\\src\\output.txt"));
         while (scanner.hasNext()) {
             String token = scanner.next();
             scanner.next();
@@ -43,7 +43,7 @@ public class Parser {
     public VarDeclaration_R varDeclaration() {
         Type_R t = type();
         if (t == null) {
-            System.out.println("Syntax Error! type null");
+            //System.out.println("Syntax Error! type null");
             return null;
         }
         Identifier_R id = identifier();
@@ -52,8 +52,11 @@ public class Parser {
             return null;
         }
         Match token = queue.peek();
-        if (token == null && token.token != "SEMICOLON") {
-            System.out.println("Syntax Error! semicolon");
+        if (token == null )  {
+            System.out.println("Syntax Error! semicolon null");
+            return null;
+        }
+        if(!token.token.equals("SEMICOLON")){
             return null;
         }
         queue.poll();
@@ -63,7 +66,7 @@ public class Parser {
     public Type_R type() {
         DataType_R d = datatype();
         if (d == null) {
-            System.out.println("Sytnax Error! datatype null");
+            //System.out.println("Sytnax Error! datatype null");
             return null;
         }
         Array_R a = array();
@@ -73,11 +76,11 @@ public class Parser {
     public DataType_R datatype() {
         Match token = queue.peek();
         if (token.token == null) {
-            System.out.println("Syntax Error! datatype null");
+            //System.out.println("Syntax Error! datatype null");
             return null;
         }
         if (!token.token.equals("BOOLEAN") && !(token.token.equals("INT")) && !token.token.equals("FLOAT") && !token.token.equals("STRING") && !token.token.equals("CHAR")) {
-            System.out.println("Syntax Error! wrong datatype");
+            //System.out.println("Syntax Error! wrong datatype");
             return null;
         }
         queue.poll();
@@ -758,6 +761,595 @@ public class Parser {
         }
         return null;
     }
+    //==========================method declaration=====================//
+    public MethodDeclaration_R methodDeclaration() {
+        ArrayList<Paramter> paramters = new ArrayList<>();
+        Match token = queue.peek();
+        if (token == null) {
+            System.out.println("Synatx Error! token null");
+            return null;
+        }
+        //System.out.println("public "+token.token +"  "+token.value);
+
+        if (!token.token.equals("PUBLIC") && !token.token.equals("PRIVATE") && !token.token.equals("PROTECTED")) {
+            System.out.println("Syntax Error! public or private or protected is wrong");
+            return null;
+        }
+        queue.poll();
+        Type_R type = type();
+        if (type == null) {
+            System.out.println("Synatx Error! type null inside method dec");
+            return null;
+        }
+        Identifier_R id = identifier();
+        if (id == null) {
+            System.out.println("Syntax Error! id null");
+            return null;
+        }
+        Match token2 = queue.peek();
+        if (token2 == null) {
+            System.out.println("Syntax Error! ( null ");
+            return null;
+        }
+        if (!token2.token.equals("LEFT_ROUND_B")) {
+            System.out.println("Syntax Error! ( wrong ");
+            return null;
+        }
+        Match token4 = new Match();
+
+        if (token2.token.equals("LEFT_ROUND_B")) {
+            queue.poll();
+            Type_R type2 = type();
+
+            System.out.println("in method dec after return from type");
+            while (type2 != null) {
+                Identifier_R id2 = identifier();
+                if (id2 == null) {
+                    System.out.println("Synatx Error! id inside paramter null");
+                    return null;
+                }
+                Match token3 = queue.peek();
+                if (token3 == null) {
+                    System.out.println("Synatx Error! )is null");
+                    return null;
+                }
+                Paramter paramter = new Paramter(type2, id2);
+                paramters.add(paramter);
+                if (!token3.token.equals("COMMA")) {
+                    break;
+                }
+                if (token3.token.equals("COMMA")) {
+                    queue.poll();
+                    type2 = type();
+                    if(type2 == null){
+                        System.out.println("Syntax Error! extra comma");
+                        return null;
+                    }
+
+                }
+
+            }
+            token4 = queue.peek();
+            if (token4 == null) {
+                System.out.println("Synatx Error! ) null ");
+                return null;
+            }
+            if (!token4.token.equals("RIGHT_ROUND_B")) {
+                System.out.println("Synatx Error!  wrong )");
+                return null;
+            }
+            queue.poll();
+        }
+
+        Match token5 = queue.peek();
+        if (token5 == null) {
+            System.out.println("Synatx Error! { null ");
+            return null;
+        }
+        if (!token5.token.equals("LEFT_CURLY_B")) {
+            System.out.println("Synatx Error! wrong { ");
+            return null;
+        }
+        queue.poll();
+        ArrayList<VarDeclaration_R> varDeclarations = new ArrayList<>();
+        VarDeclaration_R varDeclaration = varDeclaration();
+        while (varDeclaration != null) {
+            varDeclarations.add(varDeclaration);
+            varDeclaration = varDeclaration();
+        }
+        ArrayList<Statement_R> statements = new ArrayList<>();
+        Statement_R stmt = statement();
+        System.out.println("return from stmt  " +stmt);
+        while (stmt != null) {
+            statements.add(stmt);
+            stmt = statement();
+        }
+        Match token6 = queue.peek();
+        if (token6 == null) {
+            System.out.println("Synatx Error! return is  null");
+            return null;
+        }
+        //System.out.println("token 6 "+token6.token+"  "+token6.value);
+        if (!token6.token.equals("RETURN")) {
+            System.out.println("Synatx Error! return wrong ");
+            return null;
+        }
+        queue.poll();
+        Expression_R expr = expression();
+        if (expr == null) {
+            System.out.println("Synatx Error! expr null ");
+            return null;
+        }
+        Match token7 = queue.peek();
+        if (token7 == null) {
+            System.out.println("Synatx Error! ; null ");
+            return null;
+        }
+        if (!token7.token.equals("SEMICOLON")) {
+            System.out.println("Synatx Error! wrong ; ");
+            return null;
+        }
+        queue.poll();
+        Match token8 = queue.peek();
+        if (token8 == null) {
+            System.out.println("Synatx Error! } null ");
+            return null;
+        }
+        if (!token8.token.equals("RIGHT_CURLY_B")) {
+            System.out.println("Synatx Error! { wrong ");
+            return null;
+        }
+        queue.poll();
+
+        return new MethodDeclaration_R(token, type, id, token2, paramters, paramters.size() - 1, token4, token5, varDeclarations, statements, token6, token7, token8);
+
+
+    }
+    public ConstructorDeclaration_R constructorDeclartion() {
+        ArrayList <Paramter> paramters = new ArrayList<>();
+        ArrayList <Statement_R> statements = new ArrayList<>();
+        ArrayList <VarDeclaration_R> varDeclarations = new ArrayList<>();
+
+        Identifier_R id = identifier();
+        if (id == null){
+            System.out.println("Synatx Error! id null");
+            return null;
+        }
+        Match token = queue.peek();
+        if(token == null){
+            System.out.println("Synatx Error! left ( null");
+            return null;
+        }
+        if (!token.token.equals("LEFT_ROUND_B")){
+            System.out.println("Synatx Error! ( wrong");
+            return null;
+        }
+        queue.poll();
+        Type_R type = type();
+        while (type != null){
+            Identifier_R id2 =identifier();
+            if (id2 == null){
+                System.out.println("Synatx Error! id inside paramter null");
+                return null;
+            }
+            Paramter paramter = new Paramter(type, id2);
+            paramters.add(paramter);
+            Match comma = queue.peek();
+            if(comma == null){
+                System.out.println("Synatx Error!  right ) null");
+                return null;
+            }
+            if (!comma.token.equals("COMMA")){
+                break;
+            }
+            if (comma.token.equals("COMMA")){
+                queue.poll();
+                //System.out.println(" comma found");
+                type = type();
+                if (type == null){
+                    System.out.println("Syntax Error! extra comma ");
+                    return null;
+                }
+
+
+            }
+
+        }
+        Match token2 = queue.peek();
+        if (token2 == null){
+            System.out.println("Synax Error! right ) null");
+            return null;
+        }
+        if (!token2.token.equals("RIGHT_ROUND_B")){
+            System.out.println("Synax Error! right ) wrong");
+            return null;
+        }
+        queue.poll();
+        Match token3 = queue.peek();
+        if (token3 == null) {
+            System.out.println("Synatx Error! { null ");
+            return null;
+        }
+        if (!token3.token.equals("LEFT_CURLY_B")) {
+            System.out.println("Synatx Error! wrong { ");
+            return null;
+        }
+        //System.out.println("token3 " + token3.value);
+        queue.poll();
+        VarDeclaration_R varDeclaration = varDeclaration();
+
+        while (varDeclaration != null) {
+            //System.out.println("ana henaaaaaaa");
+            varDeclarations.add(varDeclaration);
+            varDeclaration = varDeclaration();
+        }
+
+        Statement_R stmt = statement();
+        while (stmt != null) {
+            statements.add(stmt);
+            stmt = statement();
+        }
+        Match token4 = queue.peek();
+        //System.out.println("token 4  : "+token4.value);
+        if (token4 == null) {
+            System.out.println("Synatx Error! } null ");
+            return null;
+        }
+        if (!token4.token.equals("RIGHT_CURLY_B")) {
+            System.out.println("Synatx Error! wrong } ");
+            return null;
+        }
+        queue.poll();
+        return new ConstructorDeclaration_R(id,token,paramters,paramters.size()-1,token2,token3,varDeclarations,statements,token4);
+    }
+    public ClassDeclaration_R classDeclaration(){
+        System.out.println("i'm hereeeeeeee");
+        ArrayList<VarDeclaration_R> varDeclarations =new ArrayList<>();
+        ArrayList<ConstructorDeclaration_R> constructorDeclarations =new ArrayList<>();
+        ArrayList<MethodDeclaration_R> methodDeclarations =new ArrayList<>();
+        Match token = queue.peek();
+        if (token == null){
+            System.out.println("Syntax Error! class null");
+            return null;
+        }
+        if (!token.token.equals("CLASS")){
+            System.out.println("Syntax Error! class wrong");
+            return null;
+        }
+        queue.poll();
+        Identifier_R id = identifier();
+        if (id == null){
+            System.out.println("Syntax Error! id null");
+            return null;
+        }
+        System.out.println("ana henaaaa");
+        Match token2 = queue.peek();
+        System.out.println("token 2 "+token2.value);
+        if (token2 == null){
+            System.out.println("Syntax Error! left { null");
+            return null;
+        }
+        boolean extendFound = false;
+        Match extend =new Match();
+
+        Identifier_R id2 = new Identifier_R();
+        if (token2.token.equals("EXTENDS")){
+            System.out.println("extend found : "+token2.value);
+            queue.poll();
+            id2 = identifier();
+            if (id2 == null){
+                System.out.println("Syntax Error! id after extend null");
+                return null;
+            }
+            extendFound = true;
+            extend = token2;
+
+        }
+        token2 = queue.peek();
+        if (!token2.token.equals("LEFT_CURLY_B")){
+            System.out.println("Syntax Error! left { wrong");
+            return null;
+        }
+        queue.poll();
+        VarDeclaration_R varDeclaration =varDeclaration();
+        System.out.println("var dec "+varDeclaration);
+        while (varDeclaration != null){
+            varDeclarations.add(varDeclaration);
+            varDeclaration = varDeclaration();
+        }
+        ConstructorDeclaration_R constructorDeclaration = constructorDeclartion();
+        System.out.println("construction declaration "+constructorDeclaration);
+        while (constructorDeclaration != null){
+            constructorDeclarations.add(constructorDeclaration);
+            constructorDeclaration = constructorDeclartion();
+        }
+        MethodDeclaration_R methodDeclaration = methodDeclaration();
+        System.out.println("method declaration "+methodDeclaration);
+        while (methodDeclaration != null){
+            methodDeclarations.add(methodDeclaration);
+            methodDeclaration = methodDeclaration();
+        }
+        Match token3 = queue.peek();
+        if (token3 == null){
+            System.out.println("Syntax Error! right } is null");
+            return null;
+        }
+        if (!token3.token.equals("RIGHT_CURLY_B")){
+            System.out.println("Syntax Error! right } wrong");
+            return null;
+        }
+        queue.poll();
+        if (extendFound){
+            return new ClassDeclaration_R(token,id,extend,id2,token2,varDeclarations,constructorDeclarations,methodDeclarations,token3);
+        }
+        return new ClassDeclaration_R(token,id,token2,varDeclarations,constructorDeclarations,methodDeclarations,token3);
+    }
+    public MainClass_R mainClass(){//missing mean that it can be anything :"D
+
+        Match token = queue.peek();//should peek class
+        if (token == null){
+            System.out.println("Syntax Error! class in MainClass is null!");
+            return null;
+        }
+
+        if(token.token.equals("CLASS")){
+            queue.poll();
+            Identifier_R id = identifier();
+            if (id == null){
+                System.out.println("Syntax Error! identifier in mainClass is null");
+                return null;
+            }
+
+            Match token1 = queue.peek(); //should peek {
+            if (token1 == null){
+                System.out.println("Syntax Error! { in mainClass is null");
+                return null;
+            }
+
+            if (token1.token.equals("LEFT_CURLY_B")){
+                queue.poll();
+                Match token2 = queue.peek();//PUBLIC
+                if (token2 == null){
+                    System.out.println("Syntax Error! public in mainClass is null");
+                    return null;
+                }
+
+                if(token2.token.equals("PUBLIC")){
+                    queue.poll();
+                    Match token3 = queue.peek();//STATIC
+                    if(token3 == null){
+                        System.out.println("Syntax Error! static in mainClass is null");
+                        return null;
+                    }
+
+                    if(token3.token.equals("STATIC")){
+                        queue.poll();
+                        Match token4 = queue.peek(); //SHOULD PEEK VOID
+
+                        if (token4 == null){
+                            System.out.println("Syntax Error! void in mainClass is null");
+                            return null;
+                        }
+
+                        if(token4.token.equals("VOID")){
+                            queue.poll();
+                            Match token5 = queue.peek();//Sholud peek main
+                            if (token5 == null){
+                                System.out.println("Syntax Error! void in mainClass is null");
+                                return null;
+                            }
+                            if (token5.token.equals("MAIN")){
+                                queue.poll();
+                                Match token6 = queue.peek();//should peek (
+                                if (token6 == null){
+                                    System.out.println("Syntax Error! main in main class is null");
+                                    return null;
+                                }
+
+                                if(token6.token.equals("LEFT_ROUND_B")){
+                                    queue.poll();
+                                    Match token8 = queue.peek();// Should peek string
+                                    if(token8 == null){
+                                        System.out.println("Syntax Error! string in main class in null");
+                                        return null;
+                                    }
+
+                                    if(token8.token.equals("STRING")){
+                                        queue.poll();
+                                        Match token9 = queue.peek();//Should peek [ wa ya rab n5l9 b2a
+                                        if(token9 == null){
+                                            System.out.println("Syntax Error! [ in main class in null");
+                                            return null;
+                                        }
+
+                                        if(token9.token.equals("LEFT_SQUARE_B")){
+                                            queue.poll();
+                                            Match token10 = queue.peek();//SHOULD PEEK ]
+                                            if(token10 == null){
+                                                System.out.println("Syntax Error! ] in main class is null");
+                                                return null;
+                                            }
+                                            if(token10.token.equals("RIGHT_SQUARE_B")){
+                                                queue.poll();
+                                                Identifier_R id1 = identifier();
+                                                if(id1 == null){
+                                                    System.out.println("Syntax Error! identifier after ] in main class is null");
+                                                    return null;
+                                                }
+                                                Match token11 = queue.peek();//Should peek )
+                                                if(token11 == null){
+                                                    System.out.println("Syntax Error! ) in main class is null");
+                                                    return null;
+                                                }
+
+                                                if(token11.token.equals("RIGHT_ROUND_B")){
+                                                    queue.poll();
+                                                    Match token12 = queue.peek();
+                                                    if(token12 == null){
+                                                        System.out.println("Syntax Error! { in main class is null");
+                                                        return null;
+                                                    }
+                                                    if(token12.token.equals("LEFT_CURLY_B")){
+                                                        queue.poll();
+                                                        Statement_R stmt = statement();
+                                                        if(stmt == null){
+                                                            System.out.println("Syntax Error! stmt in main class is null");
+                                                            return null;
+                                                        }
+                                                        Match token13 = queue.peek();//should peek }
+                                                        if(token13 == null){
+                                                            System.out.println("Syntax Error! } after statement is null");
+                                                            return null;
+
+                                                        }
+                                                        if(token13.token.equals("RIGHT_CURLY_B")){
+                                                            queue.poll();
+                                                            Match token14 = queue.peek();//should peek }
+                                                            if(token14 == null){
+                                                                System.out.println("Syntax Error! } after } is null");
+                                                                return null;
+                                                            }
+                                                            if(token14.token.equals("RIGHT_CURLY_B")){
+                                                                queue.poll();
+                                                                return new MainClass_R(token, id, token1, token2, token3, token4, token5, token6, token8, token9,
+                                                                        token10, id1, token11, token12, stmt, token13, token14);
+
+                                                            }
+                                                            else{
+                                                                System.out.println("Syntax Error! } after } is missing");
+                                                            }
+                                                        }
+
+                                                        else{
+                                                            System.out.println("Syntax Error! } after stmt is missing");
+                                                            return null;
+                                                        }
+
+                                                    }
+                                                    else{
+
+                                                        System.out.println("Syntax Error! { in main class is missing");
+                                                        return null;
+                                                    }
+                                                }
+                                                else {
+                                                    System.out.println("Syntax Error! ) in main class is is missing");
+                                                    return null;
+                                                }
+
+                                            }
+                                            else{
+                                                System.out.println("Syntax Error! ] in main class is null");
+                                                return null;
+                                            }
+
+
+                                        }
+                                        else {
+                                            System.out.println("Syntax Error! [ in main class is missing");
+                                            return null;
+                                        }
+
+                                    }
+
+                                    else{
+                                        System.out.println("Syntax Errro! String in main class is missing");
+                                        return null;
+                                    }
+
+                                }
+
+                                else{
+                                    System.out.println("Syntax Error! ( is missing");
+                                    return null;
+                                }
+                            }
+
+                            else{
+                                System.out.println("Syntax Error! main in main class is missing");
+                                return null;
+                            }
+                        }
+
+                        else{
+                            System.out.println("Syntax Error! void in mainClass is missing");
+                            return null;
+                        }
+                    }
+
+                    else {
+
+                        System.out.println("Syntax Error! static in mainClass is missing");
+                        return null;
+                    }
+
+                }
+
+                else {
+                    System.out.println("Syntax ERROR! public in mainClass is missing");
+                    return null;
+                }
+
+
+            }
+
+            else {
+                System.out.println("Syntax Error! { in mainClass is missing");
+                return null;
+            }
+
+        }
+
+        System.out.println("Syntax Error! class in main class is missing");
+        return null;
+    }
+    public Goal_R goal(){
+        MainClass_R mainClass = mainClass();
+        if(mainClass == null){
+            System.out.println("Syntax Error! main class in goal is null");
+            return null;
+        }
+
+        ClassDeclaration_R classD = classDeclaration();
+        if(classD == null){
+            Match token = queue.peek();
+            if(token == null){
+                System.out.println("Syntax Error! EOF is null in Goal");
+                return null;
+            }
+            if(token.token.equals("EOF")){
+                queue.poll();
+                return new Goal_R(mainClass, token);
+            }
+        }
+
+        ArrayList<Goal_R> classDs;
+        classDs = new ArrayList<Goal_R>();
+
+        while(classD != null){
+
+            Goal_R goal = new Goal_R(classD);
+            classDs.add(goal);
+            classD = classDeclaration();
+
+        }
+
+        Match token = queue.peek();
+        if(token == null){
+            System.out.println("Syntax Error! EOF is null");
+            return null;
+        }
+
+        if(token.token.equals("EOF")){
+            queue.poll();
+            return new Goal_R(mainClass, classDs, token);
+        }
+
+        return null;
+    }
+
+
+
 
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -774,5 +1366,25 @@ public class Parser {
 //        Statement_R stmt = p.statement();
 //        stmt.printNode();
         System.out.println("horay");
+//        System.out.println("horay");
+//        System.out.println("=======================================");
+//        MethodDeclaration_R method = p.methodDeclaration();
+//        System.out.println(method);
+//        System.out.println("number of commas :"+method.numberOfCommas);
+//        System.out.println("vars dec "+ method.varDeclarations.size());
+//        System.out.println("stat size "+method.statements.size());
+//        ConstructorDeclaration_R con = p.constructorDeclartion();
+//        System.out.println("constructor result "+con);
+        //System.out.println(con.varDeclarations.size());
+        //System.out.println(con.statements.size());
+//        ClassDeclaration_R c =p.classDeclaration();
+//        System.out.println("class declaration : "+ c );
+//        System.out.println("ana 3adeet");
+//        MainClass_R mClass = p.mainClass();
+//        System.out.println("main class : "+mClass);
+        Goal_R goal = p.goal();
+        System.out.println("goal : "+goal);
+        System.out.println(goal.classDs.size());
+
     }
 }

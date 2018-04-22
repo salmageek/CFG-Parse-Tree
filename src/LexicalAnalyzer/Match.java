@@ -5,6 +5,8 @@ package LexicalAnalyzer;/*
  */
 
 public class Match {
+    public Match() {
+    }
 
     public String token;
     public String value;

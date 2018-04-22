@@ -1,1 +1,1 @@
-int x;
+class id { public static void main ( String [ ] Identifier ) { x=x+1;} } class khadega {int i ; } class khadega {int i ; }
