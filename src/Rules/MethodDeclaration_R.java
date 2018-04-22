@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 //MethodDeclaration ::= ("public" | "private" | "protected") Type Identifier"(" ( Type Identifier ( "," Type Identifier )*)? ")"
 //"{" ( VarDeclaration )* ( Statement )* "return" Expression ";" "}"
-public class MethodDeclaration_R {
+public class MethodDeclaration_R implements Node {
     Match methodType;
     Type_R type1;
     Identifier_R identifier1;
@@ -19,11 +19,12 @@ public class MethodDeclaration_R {
     ArrayList <VarDeclaration_R> varDeclarations =new ArrayList<>();
     ArrayList <Statement_R> statements = new ArrayList<>();
     Match return_;
+    Expression_R expression;
     Match semiColon;
     Match RIGHT_CURLY_B;
 
     //params + vars+ stmts
-    public MethodDeclaration_R(Match methodType, Type_R type1, Identifier_R identifier1, Match LEFT_ROUND_B, ArrayList<Paramter> paramters, int numberOfCommas, Match RIGHT_ROUND_B, Match LEFT_CURLY_B, ArrayList<VarDeclaration_R> varDeclarations, ArrayList<Statement_R> statements, Match return_, Match semiColon, Match RIGHT_CURLY_B) {
+    public MethodDeclaration_R(Match methodType, Type_R type1, Identifier_R identifier1, Match LEFT_ROUND_B, ArrayList<Paramter> paramters, int numberOfCommas, Match RIGHT_ROUND_B, Match LEFT_CURLY_B, ArrayList<VarDeclaration_R> varDeclarations, ArrayList<Statement_R> statements, Match return_, Expression_R expression, Match semiColon, Match RIGHT_CURLY_B) {
         this.methodType = methodType;
         this.type1 = type1;
         this.identifier1 = identifier1;
@@ -35,9 +36,34 @@ public class MethodDeclaration_R {
         this.varDeclarations = varDeclarations;
         this.statements = statements;
         this.return_ = return_;
+        this.expression = expression;
         this.semiColon = semiColon;
         this.RIGHT_CURLY_B = RIGHT_CURLY_B;
     }
+    @Override
+    public void printNode(){
+        System.out.print(methodType.value );
+        type1.printNode();
+        identifier1.printNode();
+        System.out.print(LEFT_ROUND_B);
+        for (int i = 0; i < paramters.size(); i++) {
+            paramters.get(i).type.printNode();
+            paramters.get(i).id.printNode();
+            System.out.print(",");
+        }
+        System.out.print(RIGHT_ROUND_B+" "+LEFT_CURLY_B);
+        for (int i =0; i<varDeclarations.size(); i++){
+            varDeclarations.get(i).printNode();
+        }
+        for (int i = 0 ; i<statements.size(); i++){
+            statements.get(i).printNode();
+        }
+        System.out.println(return_.value+" ");
+        expression.printNode();
+
+
+    }
+
 
 
 }

@@ -900,7 +900,7 @@ public class Parser {
         }
         queue.poll();
 
-        return new MethodDeclaration_R(token, type, id, token2, paramters, paramters.size() - 1, token4, token5, varDeclarations, statements, token6, token7, token8);
+        return new MethodDeclaration_R(token, type, id, token2, paramters, paramters.size() - 1, token4, token5, varDeclarations, statements, token6,expr, token7, token8);
 
 
     }
