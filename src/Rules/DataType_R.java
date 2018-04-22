@@ -12,10 +12,6 @@ public class DataType_R implements Node {
 
     @Override
     public void printNode() {
-        System.out.print("DataType:- ");
-        if (token == null)
-            System.out.println("null");
-        else
-            System.out.println(token.value);
+        System.out.print(token.value);
     }
 }

@@ -5,7 +5,6 @@ MainClass ::= "class" Identifier "{" "public" "static" "void" "main" "(" "String
 ClassDeclaration ::= "class" Identifier ( "extends" Identifier )? "{" ( VarDeclaration )* 
 					( ConstructorDeclaration )* ( MethodDeclaration )* "}"
 
-VarDeclaration ::= Type Identifier ";"
 
 ConstructorDeclaration::= Identifier "(" ( Type Identifier ( "," Type Identifier )*)? ")"
 						"{" ( VarDeclaration )* ( Statement )* "}"
@@ -14,13 +13,19 @@ MethodDeclaration ::= ("public" | "private" | "protected") Type Identifier
 					"(" ( Type Identifier ( "," Type Identifier )*)? ")"
 					"{" ( VarDeclaration )* ( Statement )* "return" Expression ";" "}"
 
-Type ::= "int" "[" "]"
-		| "boolean"
-		| "int"
-		| "float" | "String" | "char" | "float" "[" "]"
-		| "String" "[" "]"
-		| "char" "[" "]"
-		| "boolean" "[" "]"
+VarDeclaration ::= Type Identifier ";"
+
+Type ::=  DataType Array
+	
+DateType ::= "boolean"
+			| "int"
+			| "float"
+			| "String"
+			| "char"
+
+Array ::= "[" "]" | E
+
+Identifier ::= <IDENTIFIER>
 
 Expression -> <INTEGRAL_LITERAL> Expression''
 			| <FLOAT_LITERAL> Expression''
@@ -56,6 +61,5 @@ Statement ->  "{" ( Statement )* "}"
 ElseStatement -> else Statement | E
 
 StatementExpression -> "=" Expression ";" | 
-					   "[" Expression "]" "=" Expression ";"
+						"[" Expression "]" "=" Expression ";"
 
-Identifier ::= <IDENTIFIER>

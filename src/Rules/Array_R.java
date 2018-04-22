@@ -13,8 +13,7 @@ public class Array_R implements Node {
 
     @Override
     public void printNode() {
-        System.out.print("Array:- ");
-        if (token1 != null)
-            System.out.println(token1.value + token2.value);
+        System.out.print(token1.value + token2.value);
+
     }
 }
