@@ -1,1 +1,1 @@
-{if(x==2){System.out.println(x);}else{}}
+class id { public static void main ( String [ ] Identifier ) { x=x+1;} } class khadega {int i ; } class khadega {int i ; }
