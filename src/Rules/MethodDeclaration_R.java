@@ -46,10 +46,13 @@ public class MethodDeclaration_R implements Node {
         type1.printNode();
         identifier1.printNode();
         System.out.print(LEFT_ROUND_B);
-        for (int i = 0; i < paramters.size(); i++) {
+        for (int i = 0; i<paramters.size(); i++){
             paramters.get(i).type.printNode();
+            System.out.println(" ");
             paramters.get(i).id.printNode();
-            System.out.print(",");
+            if (i != paramters.size()-1)
+                System.out.println(", ");
+
         }
         System.out.print(RIGHT_ROUND_B+" "+LEFT_CURLY_B);
         for (int i =0; i<varDeclarations.size(); i++){
@@ -58,8 +61,10 @@ public class MethodDeclaration_R implements Node {
         for (int i = 0 ; i<statements.size(); i++){
             statements.get(i).printNode();
         }
-        System.out.println(return_.value+" ");
-        expression.printNode();
+        System.out.print(return_.value+" ");
+        //expression.printNode();
+        System.out.println(semiColon.value);
+        System.out.println(RIGHT_CURLY_B.value);
 
 
     }

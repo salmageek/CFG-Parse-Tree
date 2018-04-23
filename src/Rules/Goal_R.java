@@ -4,7 +4,7 @@ import LexicalAnalyzer.Match;
 
 import java.util.ArrayList;
 
-public class Goal_R {
+public class Goal_R implements Node{
     MainClass_R mainClass;
     ClassDeclaration_R classDeclaration;
     Match eof;
@@ -23,6 +23,14 @@ public class Goal_R {
         this.mainClass = mainClass;
         this.classDs = classDs;
         this.eof = eof;
+    }
+    @Override
+    public void printNode(){
+        mainClass.printNode();
+        for (int i = 0; i < classDs.size(); i++){
+            classDs.get(i).printNode();
+        }
+
     }
 
 }

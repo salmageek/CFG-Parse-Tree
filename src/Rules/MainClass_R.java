@@ -4,7 +4,7 @@ import LexicalAnalyzer.Match;
 
 // MainClass ::= "class" Identifier "{" "public" "static" "void" "main" "(" "String" "[" "]" Identifier ")" "{" Statement "}" "}"
 
-public class MainClass_R {
+public class MainClass_R implements Node{
     Match class_;
     Identifier_R identifier1;
     Match LEFT_CURLY_B1;
@@ -47,6 +47,19 @@ public class MainClass_R {
         this.RIGHT_CURLY_B1 = RIGHT_CURLY_B1;
 
     }
+//    MainClass ::= "class" Identifier "{" "public" "static" "void" "main" "(" "String" "[" "]" Identifier ")" "{" Statement "}" "}"
+    @Override
+    public void printNode(){
+        System.out.print(class_.value + " ");
+        identifier1.printNode();
+        System.out.println(" " + LEFT_CURLY_B1.value);
+        System.out.println("    "+public_.value + " " + static_.value + " " + void_.value + " " + main_.value + LEFT_ROUND_B.value);
+        System.out.print(string_.value + LEFT_SQUARE_B.value + RIGHT_SQUARE_B.value + " ");
+        identifier2.printNode();
+        System.out.println(RIGHT_ROUND_B.value + " " + LEFT_CURLY_B1.value);
+        statement.printNode();
+    }
+
 
 
 }
