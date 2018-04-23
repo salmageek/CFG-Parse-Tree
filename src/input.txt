@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 class id 
 {
 public static void main (String [] args )
@@ -17,3 +18,4 @@ int z;
 if ( x+2 ) System.out.println( x+1); else {} 
 return new x(x+3, x+2);
 } }
+

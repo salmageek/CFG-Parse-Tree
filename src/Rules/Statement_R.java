@@ -86,7 +86,7 @@ public class Statement_R implements Node {
             System.out.println(token2.value);
 
         } else if (type.equals("print statement")) {
-            System.out.print(token1.value + token2.value + " ");
+            System.out.print(token1.value + token2.value);
             if(expression != null)
                 expression.printNode();
             System.out.println(token3.value + token4.value);
@@ -96,7 +96,7 @@ public class Statement_R implements Node {
             
             if(expression != null)
                 expression.printNode();
-            System.out.print(token3.value);
+            System.out.println(token3.value);
             
             if(statement != null)
               statement.printNode();
@@ -107,7 +107,7 @@ public class Statement_R implements Node {
             
             if(expression != null)
                 expression.printNode();
-            System.out.print(token3.value);
+            System.out.println(token3.value);
             
             if(statement != null)
                statement.printNode();

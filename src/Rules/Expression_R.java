@@ -77,7 +77,7 @@ public class Expression_R {
         
         if(type.equals("print reserved words in expression")){//int float true false this
             
-                System.out.print(token1.value); 
+                System.out.print(token1.value );
                 if(expression2 != null)
                    expression2.printNode();
             
@@ -94,6 +94,7 @@ public class Expression_R {
         else if(type.equals("print identifier in expression")){
             if(identifier != null)
                identifier.printNode();
+            System.out.print(" ");
             if(expression2 != null)
                expression2.printNode();
              

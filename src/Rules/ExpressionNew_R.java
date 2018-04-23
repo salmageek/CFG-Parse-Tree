@@ -91,11 +91,11 @@ public class ExpressionNew_R implements Node {
 
         } else if (type.equals("many expressions")) {
             identifier.printNode();
-            System.out.print(token1.value);
+            System.out.print("===="+token1.value);
             expression1.printNode();
             for (int i = 0; i < commaExpression.size(); i++) {
                 ExpressionNew_R expr = commaExpression.get(i);
-                System.out.print(expr.token1 + " ");
+                System.out.print(expr.token1.value + " ");
                 expr.expression1.printNode();
             }
             System.out.print(token2.value);
