@@ -27,7 +27,7 @@ public class Parser {
         Tokenizer t = new Tokenizer();
         t.runTokenizer();
 
-        Scanner scanner = new Scanner(new File("E:\\FOURTH YEAR\\second semester\\compilers\\project1\\CFG-Parse-Tree-1\\src\\output.txt"));
+        Scanner scanner = new Scanner(new File("/Users/Eslam/Desktop/CFG-Parse-Tree/src/output.txt"));
         while (scanner.hasNext()) {
             String token = scanner.next();
             scanner.next();
@@ -125,6 +125,7 @@ public class Parser {
     // ================== Expression ======================== //
 
     public Expression_R expression() {
+        String type = "";
         Match token = queue.peek();
         if (token == null) {
             // System.out.println("Syntax Error! no tokens in Expression");
@@ -134,29 +135,34 @@ public class Parser {
         if (token.token.equals("INTEGRAL_LITERAL")) {
             queue.poll();
             Expression2_R expression2 = Expression2();
-            return new Expression_R(token, expression2);
+            type = "print reserved words in expression";
+            return new Expression_R(token, expression2, type);
 
 
         } else if (token.token.equals("FLOAT_LITERAL")) {
             queue.poll();
             Expression2_R expression2 = Expression2();
-            return new Expression_R(token, expression2);
+            type = "print reserved words in expression";
+            return new Expression_R(token, expression2, type);
 
         } else if (token.token.equals("TRUE")) {
             queue.poll();
             Expression2_R expression2 = Expression2();
-            return new Expression_R(token, expression2);
+            type = "print reserved words in expression";
+            return new Expression_R(token, expression2, type);
 
         } else if (token.token.equals("FALSE")) {
             queue.poll();
             Expression2_R expression2 = Expression2();
-            return new Expression_R(token, expression2);
+            type = "print reserved words in expression";
+            return new Expression_R(token, expression2, type);
 
 
         } else if (token.token.equals("THIS")) {
             queue.poll();
             Expression2_R expression2 = Expression2();
-            return new Expression_R(token, expression2);
+            type = "print reserved words in expression";
+            return new Expression_R(token, expression2, type);
 
         } else if (token.token.equals("NEW")) {
             // TODO: check ExpressionNew function
@@ -166,7 +172,8 @@ public class Parser {
                 System.out.println("Syntax Error! expression->new expressionNew is null");
                 return null;
             }
-            return new Expression_R(token, expressionNew);
+            type = "print new in expression";
+            return new Expression_R(token, expressionNew, type);
 
         } else if (token.token.equals("NOT")) {
             queue.poll();
@@ -176,7 +183,8 @@ public class Parser {
                 return null;
             }
             Expression2_R expression2 = Expression2();
-            return new Expression_R(token, expression, expression2);
+            type = "print ! in expression";
+            return new Expression_R(token, expression, expression2, type);
 
         } else if (token.token.equals("LEFT_ROUND_B")) {
             queue.poll();
@@ -195,7 +203,8 @@ public class Parser {
             if (token2.token.equals("RIGHT_ROUND_B")) {
                 queue.poll();
                 Expression2_R expression2 = Expression2();
-                return new Expression_R(token, expression, token2, expression2);
+                type = "print (expression) in expression";
+                return new Expression_R(token, expression, token2, expression2, type);
             } else {
                 System.out.println("Syntax Error! expression->( ) is missing");
                 return null;
@@ -206,7 +215,8 @@ public class Parser {
             Identifier_R id = identifier();
             if (id != null) {
                 Expression2_R expression2 = Expression2();
-                return new Expression_R(id, expression2);
+                type = "print identifier in expression";
+                return new Expression_R(id, expression2, type);
             }
         }
         System.out.println("no valid rule was found in expression");
@@ -215,6 +225,7 @@ public class Parser {
 
     public Expression1_R Expression1() {
         Match token = queue.peek();
+        String type = "";
 
         if (token == null) {
             //System.out.println("Syntax Error!");
@@ -229,12 +240,13 @@ public class Parser {
 
             queue.poll();
             Expression_R expr = expression();
+            type = "print operator in expression1";
 
             if (expr == null) {
                 System.out.println("Syntax Error! Expression1->op Expression is null");
                 return null;
             }
-            return new Expression1_R(token, expr);
+            return new Expression1_R(token, expr, type);
 
 
         } else if (token.token.equals("LEFT_SQUARE_B")) {
@@ -254,7 +266,8 @@ public class Parser {
 
             if (token2.token.equals("RIGHT_SQUARE_B")) {
                 queue.poll();
-                return new Expression1_R(token, expr, token2);
+                type = "print [expression] in expression1";
+                return new Expression1_R(token, expr, token2, type);
             } else {
                 System.out.println("Syntax Error! Expression1->[ ] is missing");
                 return null;
@@ -267,7 +280,8 @@ public class Parser {
                 System.out.println("Syntax Error! Expression1->. ExpressionDot is null");
                 return null;
             }
-            return new Expression1_R(token, expr);
+            type = "print .expressionDot in expression1";
+            return new Expression1_R(token, expr, type);
         }
 
         return null;
@@ -1341,6 +1355,17 @@ public class Parser {
 //        Goal_R goal = p.goal();
 //        System.out.println("goal : " + goal);
 //        System.out.println(goal.classDs.size());
+        //VarDeclaration_R root = p.varDeclaration();
+        //Expression_R any = p.expression();
+        Statement_R any1 = p.statement();
+        //Expression1_R any1 = p.Expression1();
+
+    
+        //any.printNode();
+        any1.printNode();
+
+        //any1.printNode();
+
 
     }
 }
