@@ -54,13 +54,13 @@ ExpressionNew -> ("int" | "float" | "String" | "char" | "boolean" ) "[" Expressi
 
 
 Statement ->  "{" ( Statement )* "}"
-			| if "(" Expression ")" Statement ElseStatement
-			| "while" "(" Expression ")" Statement
-			| "System.out.println" "(" Expression ")" ";"
+			| if "(" Expression ")" Statement ElseStatement //Okay
+			| "while" "(" Expression ")" Statement //Okay
+			| "System.out.println" "(" Expression ")" ";" //Okay
 			| Identifier StatementExpression //Okay
 
 ElseStatement -> else Statement | E
 
-StatementExpression -> "=" Expression ";" | 
-						"[" Expression "]" "=" Expression ";"
+StatementExpression -> "=" Expression ";" |      //Okay
+						"[" Expression "]" "=" Expression ";" //Okay
 

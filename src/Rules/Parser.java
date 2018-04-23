@@ -27,7 +27,7 @@ public class Parser {
         Tokenizer t = new Tokenizer();
         t.runTokenizer();
 
-        Scanner scanner = new Scanner(new File("E:\\FOURTH YEAR\\second semester\\compilers\\project1\\CFG-Parse-Tree-1\\src\\output.txt"));
+        Scanner scanner = new Scanner(new File("/Users/Eslam/Desktop/CFG-Parse-Tree/src/output.txt"));
         while (scanner.hasNext()) {
             String token = scanner.next();
             scanner.next();
@@ -1343,8 +1343,8 @@ public class Parser {
         Parser p = new Parser();
         p.loadTokens();
         Goal_R root = p.goal();
-//        MainClass_R root = p.mainClass();
-        //ClassDeclaration_R root = p.classDeclaration();
+        //MainClass_R root = p.mainClass();
+        //ClassDeclaration_R root2 = p.classDeclaration();
         if (root != null)
             root.printNode();
 
