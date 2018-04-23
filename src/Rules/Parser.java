@@ -27,7 +27,7 @@ public class Parser {
         Tokenizer t = new Tokenizer();
         t.runTokenizer();
 
-        Scanner scanner = new Scanner(new File("/Users/Eslam/Desktop/CFG-Parse-Tree/src/output.txt"));
+        Scanner scanner = new Scanner(new File("E:\\FOURTH YEAR\\second semester\\compilers\\project1\\CFG-Parse-Tree-1\\src\\output.txt"));
         while (scanner.hasNext()) {
             String token = scanner.next();
             scanner.next();
@@ -814,7 +814,6 @@ public class Parser {
             queue.poll();
             Type_R type2 = type();
 
-            System.out.println("in method dec after return from type");
             while (type2 != null) {
                 Identifier_R id2 = identifier();
                 if (id2 == null) {
@@ -872,7 +871,6 @@ public class Parser {
         }
         ArrayList<Statement_R> statements = new ArrayList<>();
         Statement_R stmt = statement();
-        System.out.println("return from stmt  " + stmt);
         while (stmt != null) {
             statements.add(stmt);
             stmt = statement();
@@ -1028,7 +1026,7 @@ public class Parser {
             return null;
         }
         if (!token.token.equals("CLASS")) {
-            System.out.println("Syntax Error! class wrong");
+            //System.out.println("Syntax Error! class wrong");
             return null;
         }
         queue.poll();
@@ -1298,6 +1296,7 @@ public class Parser {
 
     public Goal_R goal() {
         MainClass_R mainClass = mainClass();
+
         if (mainClass == null) {
             System.out.println("Syntax Error! main class in goal is null");
             return null;
@@ -1316,13 +1315,11 @@ public class Parser {
             }
         }
 
-        ArrayList<Goal_R> classDs;
-        classDs = new ArrayList<Goal_R>();
+        ArrayList<ClassDeclaration_R> classDs = new ArrayList<>();
 
         while (classD != null) {
-
-            Goal_R goal = new Goal_R(classD);
-            classDs.add(goal);
+            //Goal_R goal = new Goal_R(classD);
+            classDs.add(classD);
             classD = classDeclaration();
 
         }
@@ -1345,26 +1342,11 @@ public class Parser {
     public static void main(String[] args) throws FileNotFoundException {
         Parser p = new Parser();
         p.loadTokens();
-
-//        ClassDeclaration_R root = p.classDeclaration();
-//
-//        if (root != null)
-//            root.printNode();
-        Statement_R stmt = p.statement();
-
-//        Goal_R goal = p.goal();
-//        System.out.println("goal : " + goal);
-//        System.out.println(goal.classDs.size());
-        //VarDeclaration_R root = p.varDeclaration();
-        //Expression_R any = p.expression();
-        Statement_R any1 = p.statement();
-        //Expression1_R any1 = p.Expression1();
-
-    
-        //any.printNode();
-        any1.printNode();
-
-        //any1.printNode();
+        Goal_R root = p.goal();
+//        MainClass_R root = p.mainClass();
+        //ClassDeclaration_R root = p.classDeclaration();
+        if (root != null)
+            root.printNode();
 
 
     }
