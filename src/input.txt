@@ -1,1 +1,1 @@
- class id {public static void main (String [] args ){ {} }} class id extends id2 {int i; String s ; khadega(){} private int fun (int x,String x,float y) { int z; if ( x+2 ) while( true) x=x+1; else {} return true==true ;} }
+ class id {public static void main (String [] args ){ {} }} class id extends id2 {int i; String s ; khadega(){} private int fun (int x,String x,float y) { int z; if ( x+2 ) System.out.println( x+1); else {} return new id (x+1,x+1) ;} }
