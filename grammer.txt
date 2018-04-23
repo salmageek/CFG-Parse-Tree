@@ -34,21 +34,22 @@ Expression -> <INTEGRAL_LITERAL> Expression''
 			| Identifier Expression''
 			| "this" Expression''
 			| "new" ExpressionNew
-			| "!" Expression Expression''
+			| "!" Expression Expression'' 
 			| "(" Expression ")" Expression''
+			
 
 
 Expression''-> Expression' Expression'' | E
 
-Expression' -> ( "&&" | "||" | "==" | "!=" | ">" | "<" | "<=" | ">="| "+" | "-" | "*" | "/" ) Expression
-			-> "[" Expression "]"
+Expression' -> ( "&&" | "||" | "==" | "!=" | ">" | "<" | "<=" | ">="| "+" | "-" | "*" | "/" ) Expression //Okay
+			-> "[" Expression "]" //Okay 
 			-> "." ExpressionDot
 
 ExpressionDot -> "length" 
 				| Identifier "(" ( Expression ( "," Expression )* )? ")"
 
-ExpressionNew -> ("int" | "float" | "String" | "char" | "boolean" ) "[" Expression "]" Expression''
-				| Identifier "(" (Expression ( "," Expression)*)? ")" Expression''
+ExpressionNew -> ("int" | "float" | "String" | "char" | "boolean" ) "[" Expression "]" Expression''   //Okay
+				| Identifier "(" (Expression ( "," Expression)*)? ")" Expression''    //Not working
 
 
 
@@ -56,7 +57,7 @@ Statement ->  "{" ( Statement )* "}"
 			| if "(" Expression ")" Statement ElseStatement
 			| "while" "(" Expression ")" Statement
 			| "System.out.println" "(" Expression ")" ";"
-			| Identifier StatementExpression
+			| Identifier StatementExpression //Okay
 
 ElseStatement -> else Statement | E
 
