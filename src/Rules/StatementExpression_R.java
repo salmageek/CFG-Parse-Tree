@@ -48,9 +48,11 @@ public class StatementExpression_R implements Node {
         } else if (type.equals("expr2")) {
             
             System.out.print(token.value);
-            expression1.printNode();
+            if(expression1 != null)
+                 expression1.printNode();
             System.out.print(token2.value + " " + token3.value);
-            expression2.printNode();
+            if(expression2 != null)
+                expression2.printNode();
             System.out.println(token4.value);
         }
     }
