@@ -11,7 +11,15 @@ public class Expression2_R {
         this.expression1 = expression1;
         this.expression2 = expression2;
     }
-
-
-
+    
+    public void printNode(){
+        
+        if(expression1 != null){
+            expression1.printNode(); 
+        }
+        
+        if(expression2 != null){
+            expression2.printNode();
+        }
+    }
 }

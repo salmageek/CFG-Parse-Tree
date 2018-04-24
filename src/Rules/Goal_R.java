@@ -4,11 +4,11 @@ import LexicalAnalyzer.Match;
 
 import java.util.ArrayList;
 
-public class Goal_R {
+public class Goal_R implements Node{
     MainClass_R mainClass;
     ClassDeclaration_R classDeclaration;
     Match eof;
-    ArrayList<Goal_R> classDs = new ArrayList<Goal_R>();
+    ArrayList<ClassDeclaration_R> classDs = new ArrayList<>();
 
     public Goal_R(MainClass_R mainClass, Match eof){
         this.mainClass = mainClass;
@@ -19,10 +19,22 @@ public class Goal_R {
         this.classDeclaration = classDeclaration;
     }
 
-    public Goal_R(MainClass_R mainClass, ArrayList<Goal_R> classDs, Match eof){
+    public Goal_R(MainClass_R mainClass, ArrayList<ClassDeclaration_R> classDs, Match eof){
         this.mainClass = mainClass;
         this.classDs = classDs;
         this.eof = eof;
+    }
+    @Override
+    public void printNode(){
+        if (mainClass != null) {
+            mainClass.printNode();
+        }
+
+        for (int i = 0; i < classDs.size(); i++) {
+            classDs.get(i).printNode();
+        }
+
+
     }
 
 }

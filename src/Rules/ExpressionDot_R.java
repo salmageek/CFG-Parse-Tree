@@ -68,7 +68,9 @@ public class ExpressionDot_R implements Node {
             expression.printNode();
             System.out.print(token2.value);
 
-        } else if (type.equals("many expressions")) {
+        } 
+        
+        else if (type.equals("many expressions")) {
             identifier.printNode();
             System.out.print(token1.value);
             expression.printNode();

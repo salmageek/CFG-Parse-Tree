@@ -75,29 +75,48 @@ public class Statement_R implements Node {
 
     @Override
     public void printNode() {
+        
         if (type.equals("statements")) {
             System.out.println(token1.value);
-            if (statements.size() != 0) {
+            ////bobo and khadega al if condition msht3'lsh fa3mlna loop 
+            while(!statements.isEmpty()) {
                 statements.get(0).printNode();
                 statements.remove(0);
             }
             System.out.println(token2.value);
 
         } else if (type.equals("print statement")) {
-//            System.out.println(token1.value + token2.value + " " + expression.printNode() + token3.value + token4.value);
+            System.out.print(token1.value + token2.value);
+            if(expression != null)
+                expression.printNode();
+            System.out.println(token3.value + token4.value);
 
         } else if (type.equals("if statement")) {
-//            System.out.println(token1.value + " " + token2.value + expression.printNode() + token3.value);
-            statement.printNode();
+            System.out.print(token1.value + " " + token2.value);
+            
+            if(expression != null)
+                expression.printNode();
+            System.out.println(token3.value);
+            
+            if(statement != null)
+              statement.printNode();
             elseStatement.printNode();
 
         } else if (type.equals("while statement")) {
-//            System.out.println(token1.value + " " + token2.value + expression.printNode() + token3.value);
-            statement.printNode();
+            System.out.print(token1.value + " " + token2.value);
+            
+            if(expression != null)
+                expression.printNode();
+            System.out.println(token3.value);
+            
+            if(statement != null)
+               statement.printNode();
 
         } else if (type.equals("id statement")) {
+            
             identifier.printNode();
-            statementExpr.printNode();
+            if(statementExpr != null)
+               statementExpr.printNode();
         }
 
     }
