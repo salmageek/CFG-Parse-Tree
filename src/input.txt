@@ -15,5 +15,5 @@ khadega(){}
 private int fun (int x,String x,float y) { 
 int z; 
 if ( x+2 ) System.out.println( x+1); else {} 
-return new x(x+3, x+2);
+return x.y(x+1, y+2);
 } }

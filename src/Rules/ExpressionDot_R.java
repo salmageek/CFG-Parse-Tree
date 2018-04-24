@@ -56,11 +56,11 @@ public class ExpressionDot_R implements Node {
     @Override
     public void printNode() {
         if (type.equals("length")) {
-            System.out.println(token1.value);
+            System.out.print(token1.value);
 
         } else if (type.equals("no expression")) {
             identifier.printNode();
-            System.out.println(token1.value + token2.value);
+            System.out.print(token1.value + token2.value);
 
         } else if (type.equals("one expression")) {
             identifier.printNode();
@@ -76,10 +76,10 @@ public class ExpressionDot_R implements Node {
             expression.printNode();
             for (int i = 0; i < exprDots.size(); i++) {
                 ExpressionDot_R expr = exprDots.get(i);
-                System.out.print(expr.token1 + " ");
+                System.out.print(expr.token1.value + " ");
                 expr.expression.printNode();
             }
-            System.out.println(token2.value);
+            System.out.print(token2.value);
         }
     }
 }

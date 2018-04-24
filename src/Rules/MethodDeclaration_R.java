@@ -11,13 +11,13 @@ public class MethodDeclaration_R implements Node {
     Type_R type1;
     Identifier_R identifier1;
     Match LEFT_ROUND_B;
-    ArrayList <Paramter> paramters = new ArrayList<>();
+    ArrayList<Paramter> paramters = new ArrayList<>();
     Paramter paramter;
     int numberOfCommas;
     Match RIGHT_ROUND_B;
     Match LEFT_CURLY_B;
-    ArrayList <VarDeclaration_R> varDeclarations =new ArrayList<>();
-    ArrayList <Statement_R> statements = new ArrayList<>();
+    ArrayList<VarDeclaration_R> varDeclarations = new ArrayList<>();
+    ArrayList<Statement_R> statements = new ArrayList<>();
     Match return_;
     Expression_R expression;
     Match semiColon;
@@ -40,36 +40,36 @@ public class MethodDeclaration_R implements Node {
         this.semiColon = semiColon;
         this.RIGHT_CURLY_B = RIGHT_CURLY_B;
     }
+
     @Override
-    public void printNode(){
-        System.out.print(methodType.value +" ");
+    public void printNode() {
+        System.out.print(methodType.value + " ");
         type1.printNode();
         System.out.print(" ");
         identifier1.printNode();
         System.out.print(" " + LEFT_ROUND_B.value);
-        for (int i = 0; i<paramters.size(); i++){
+        for (int i = 0; i < paramters.size(); i++) {
             paramters.get(i).type.printNode();
             System.out.print(" ");
             paramters.get(i).id.printNode();
-            if (i != paramters.size()-1)
+            if (i != paramters.size() - 1)
                 System.out.print(", ");
 
         }
-        System.out.println(RIGHT_ROUND_B.value+" "+LEFT_CURLY_B.value);
-        for (int i =0; i<varDeclarations.size(); i++){
+        System.out.println(RIGHT_ROUND_B.value + " " + LEFT_CURLY_B.value);
+        for (int i = 0; i < varDeclarations.size(); i++) {
             varDeclarations.get(i).printNode();
         }
-        for (int i = 0 ; i<statements.size(); i++){
+        for (int i = 0; i < statements.size(); i++) {
             statements.get(i).printNode();
         }
-        System.out.print(return_.value+" ");
+        System.out.print(return_.value + " ");
         expression.printNode();
         System.out.println(semiColon.value);
         System.out.println(RIGHT_CURLY_B.value);
 
 
     }
-
 
 
 }

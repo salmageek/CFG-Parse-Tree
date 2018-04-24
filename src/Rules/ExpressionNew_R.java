@@ -68,16 +68,12 @@ public class ExpressionNew_R implements Node {
             System.out.print(token3.value);
             if (expression2_1 != null)
                 expression2_1.printNode();
-            else
-                System.out.println();
 
         } else if (type.equals("no expression")) {
             identifier.printNode();
             System.out.print(token1.value + token2.value);
             if (expression2_1 != null)
                 expression2_1.printNode();
-            else
-                System.out.println();
 
         } else if (type.equals("one expression")) {
             identifier.printNode();
@@ -86,12 +82,10 @@ public class ExpressionNew_R implements Node {
             System.out.print(token2.value);
             if (expression2_1 != null)
                 expression2_1.printNode();
-            else
-                System.out.println();
 
-        } else if (type.equals("many expressions")) {
+            } else if (type.equals("many expressions")) {
             identifier.printNode();
-            System.out.print("===="+token1.value);
+            System.out.print(token1.value);
             expression1.printNode();
             for (int i = 0; i < commaExpression.size(); i++) {
                 ExpressionNew_R expr = commaExpression.get(i);
@@ -101,8 +95,7 @@ public class ExpressionNew_R implements Node {
             System.out.print(token2.value);
             if (expression2_1 != null)
                 expression2_1.printNode();
-            else
-                System.out.println();
+
         }
     }
 }

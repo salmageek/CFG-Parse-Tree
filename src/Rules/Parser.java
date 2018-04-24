@@ -22,12 +22,11 @@ public class Parser {
         this.queue = new LinkedList<>();
     }
 
-
     public void loadTokens() throws FileNotFoundException {
         Tokenizer t = new Tokenizer();
         t.runTokenizer();
 
-        Scanner scanner = new Scanner(new File("/Users/Eslam/Desktop/CFG-Parse-Tree/src/output.txt"));
+        Scanner scanner = new Scanner(new File("C:\\Users\\Lenovo\\IdeaProjects\\Compilers Phase 2\\src\\output.txt"));
         while (scanner.hasNext()) {
             String token = scanner.next();
             scanner.next();
@@ -395,7 +394,7 @@ public class Parser {
 
                 if (token4.token.equals("RIGHT_ROUND_B")) {
                     queue.poll();
-                    return new ExpressionDot_R(id, token, expr, exprDots, token4, "many expressions");
+                    return new ExpressionDot_R(id, token2, expr, exprDots, token4, "many expressions");
                 } else {
                     System.out.println("Syntax Error! ExpressionDot->id(Expression,Expression ) is null");
                     return null;
@@ -468,7 +467,6 @@ public class Parser {
 
             if (token2.token.equals("LEFT_ROUND_B")) {
                 queue.poll();
-
                 Expression_R expr = expression();
 
                 // identifier ()
@@ -484,6 +482,7 @@ public class Parser {
                         queue.poll();
 
                         Expression2_R expression2 = Expression2();
+
                         return new ExpressionNew_R(id, token2, token4, expression2, "no expression");
                     } else {
                         System.out.println("Syntax Error! ExpressionNew->id( ) is missing");
@@ -540,7 +539,7 @@ public class Parser {
                 if (token4.token.equals("RIGHT_ROUND_B")) {
                     queue.poll();
                     Expression2_R expression2 = Expression2();
-                    return new ExpressionNew_R(id, token, expr, exprNews, token4, expression2, "many expressions");
+                    return new ExpressionNew_R(id, token2, expr, exprNews, token4, expression2, "many expressions");
                 } else {
                     System.out.println("Syntax Error! ExpressionNew->id(Expression,Expression ) is null");
                     return null;

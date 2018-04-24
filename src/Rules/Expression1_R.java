@@ -40,7 +40,7 @@ public class Expression1_R {
     public void printNode(){
         
         if(type.equals("print operator in expression1")){
-           System.out.print(token1.value + " ");
+           System.out.print(" " + token1.value + " ");
            if(expression != null){
                expression.printNode();
            }
@@ -60,7 +60,7 @@ public class Expression1_R {
         
         else if(type.equals("print .expressionDot in expression1")){
             
-            System.out.print(token1.value + " ");
+            System.out.print(token1.value);
              
             if(expressionDot != null){
                 expressionDot.printNode();
