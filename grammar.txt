@@ -1,0 +1,64 @@
+Goal ::= MainClass ( ClassDeclaration )* <EOF>
+
+MainClass ::= "class" Identifier "{" "public" "static" "void" "main" "(" "String" "[" "]" Identifier ")" "{" Statement "}" "}"
+
+ClassDeclaration ::= "class" Identifier ( "extends" Identifier )? "{" ( VarDeclaration )* 
+					( ConstructorDeclaration )* ( MethodDeclaration )* "}"
+
+VarDeclaration ::= Type Identifier ";"
+
+ConstructorDeclaration::= Identifier "(" ( Type Identifier ( "," Type Identifier )*)? ")"
+						"{" ( VarDeclaration )* ( Statement )* "}"
+
+MethodDeclaration ::= ("public" | "private" | "protected") Type Identifier
+					"(" ( Type Identifier ( "," Type Identifier )*)? ")"
+					"{" ( VarDeclaration )* ( Statement )* "return" Expression ";" "}"
+
+
+Type ::=  DataType Array
+	
+DateType ::= "boolean"
+			| "int"
+			| "float"
+			| "String"
+			| "char"
+
+Array ::= "[" "]" | E
+
+Expression -> <INTEGRAL_LITERAL> Expression''
+			| <FLOAT_LITERAL> Expression''
+			| "true" Expression''
+			| "false" Expression''
+			| Identifier Expression''
+			| "this" Expression''
+			| "new" ExpressionNew
+			| "!" Expression Expression''
+			| "(" Expression ")" Expression''
+
+
+Expression''-> Expression' Expression'' | E
+
+Expression' -> ( "&&" | "||" | "==" | "!=" | ">" | "<" | "<=" | ">="| "+" | "-" | "*" | "/" ) Expression
+			-> "[" Expression "]"
+			-> "." ExpressionDot
+
+ExpressionDot -> "length" 
+				| Identifier "(" ( Expression ( "," Expression )* )? ")"
+
+ExpressionNew -> ("int" | "float" | "String" | "char" | "boolean" ) "[" Expression "]" Expression''
+				| Identifier "(" (Expression ( "," Expression)*)? ")" Expression''
+
+
+
+Statement ->  "{" ( Statement )* "}"
+			| if "(" Expression ")" Statement ElseStatement
+			| "while" "(" Expression ")" Statement
+			| "System.out.println" "(" Expression ")" ";"
+			| Identifier StatementExpression
+
+ElseStatement -> else Statement | E
+
+StatementExpression -> "=" Expression ";" 
+					|  "[" Expression "]" "=" Expression ";"
+
+Identifier ::= <IDENTIFIER>

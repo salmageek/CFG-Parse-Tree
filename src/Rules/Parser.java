@@ -758,7 +758,9 @@ public class Parser {
         }
         return null;
     }
+
     //==========================method declaration=====================//
+
     public MethodDeclaration_R methodDeclaration() {
         ArrayList<Paramter> paramters = new ArrayList<>();
         Match token = queue.peek();
@@ -902,6 +904,7 @@ public class Parser {
 
 
     }
+
     public ConstructorDeclaration_R constructorDeclartion() {
         ArrayList <Paramter> paramters = new ArrayList<>();
         ArrayList <Statement_R> statements = new ArrayList<>();
@@ -999,6 +1002,7 @@ public class Parser {
         queue.poll();
         return new ConstructorDeclaration_R(id,token,paramters,paramters.size()-1,token2,token3,varDeclarations,statements,token4);
     }
+
     public ClassDeclaration_R classDeclaration(){
         System.out.println("i'm hereeeeeeee");
         ArrayList<VarDeclaration_R> varDeclarations =new ArrayList<>();
@@ -1081,7 +1085,6 @@ public class Parser {
         }
         return new ClassDeclaration_R(token,id,token2,varDeclarations,constructorDeclarations,methodDeclarations,token3);
     }
-
 
     public MainClass_R mainClass(){//missing mean that it can be anything :"D
 
