@@ -58,7 +58,7 @@ Statement ->  "{" ( Statement )* "}"
 
 ElseStatement -> else Statement | E
 
-StatementExpression -> "=" Expression ";" 
+StatementExpression -> "=" Expression ";"
 					|  "[" Expression "]" "=" Expression ";"
 
 Identifier ::= <IDENTIFIER>

@@ -55,6 +55,8 @@ public class Parser {
             return null;
         }
         if (!token.token.equals("SEMICOLON")) {
+            System.out.println("Syntax Error! varDeclaration-> semicolon is null");
+
             return null;
         }
         queue.poll();
@@ -1231,6 +1233,7 @@ public class Parser {
                                                             }
                                                         } else {
                                                             System.out.println("Syntax Error! } after stmt is missing");
+                                                            stmt.printNode();
                                                             return null;
                                                         }
 
@@ -1313,6 +1316,9 @@ public class Parser {
             if (token.token.equals("EOF")) {
                 queue.poll();
                 return new Goal_R(mainClass, token);
+            } else {
+                System.out.println("Syntax Error! EOF in Goal is missing!");
+                return null;
             }
         }
 
@@ -1322,7 +1328,6 @@ public class Parser {
             //Goal_R goal = new Goal_R(classD);
             classDs.add(classD);
             classD = classDeclaration();
-
         }
 
         Match token = queue.peek();
@@ -1334,9 +1339,11 @@ public class Parser {
         if (token.token.equals("EOF")) {
             queue.poll();
             return new Goal_R(mainClass, classDs, token);
+        } else {
+            System.out.println("Syntax Error! EOF in Goal is missing!");
+            return null;
         }
 
-        return null;
     }
 
 

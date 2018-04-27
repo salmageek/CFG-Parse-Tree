@@ -1,19 +1,23 @@
-class id
-{
-public static void main (String [] args )
-{ 
-        {x[3]=3;}
-     
-}
+class foo {
+	public static void main (String [] args){
+		{
+			{}
+			if (1 <= 0)
+				while(x < y)
+					{
+						bobo = soso;
+					}
+			else {
+				System.out.println(khokha);
+				bobo[x+2] = soso*2;
+			}
+
+			soso [new int[0]] = true.x((!bobo), false, this);
+		}
+
+
+	}
+
 }
 
-class id extends id2 
-{
-int i;
-String s ;
-khadega(){}
-private int fun (int x,String x,float y) { 
-int z; 
-if ( x+2 ) System.out.println( x+1); else {} 
-return x.y(x+1, y+2);
-} }
+class kdkdkkdkd

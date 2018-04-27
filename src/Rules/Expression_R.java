@@ -117,7 +117,7 @@ public class Expression_R {
                 if(expression != null)
                     expression.printNode();
 
-                System.out.print(token1.value);
+                System.out.print(token2.value);
 
                  if(expression2 != null)
                     expression2.printNode();

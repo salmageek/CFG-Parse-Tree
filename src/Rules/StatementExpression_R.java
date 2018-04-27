@@ -50,7 +50,7 @@ public class StatementExpression_R implements Node {
             System.out.print(token.value);
             if(expression1 != null)
                  expression1.printNode();
-            System.out.print(token2.value + " " + token3.value);
+            System.out.print(token2.value + " " + token3.value + " ");
             if(expression2 != null)
                 expression2.printNode();
             System.out.println(token4.value);
