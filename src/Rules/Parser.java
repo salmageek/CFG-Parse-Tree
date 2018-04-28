@@ -26,11 +26,11 @@ public class Parser {
         Tokenizer t = new Tokenizer();
         t.runTokenizer();
 
-        Scanner scanner = new Scanner(new File("C:\\Users\\Lenovo\\IdeaProjects\\Compilers Phase 2\\src\\output.txt"));
+        Scanner scanner = new Scanner(new File("/Users/Eslam/Desktop/Projects/CFG-Parse-Tree/src/output.txt"));
         while (scanner.hasNext()) {
             String token = scanner.next();
             scanner.next();
-            String value = scanner.next();
+            String value = scanner.nextLine();
             Match m = new Match(token, value, 0, 0, 0);
             this.queue.add(m);
         }

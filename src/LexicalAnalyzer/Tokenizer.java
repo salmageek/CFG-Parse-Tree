@@ -11,9 +11,9 @@ public class Tokenizer {
 
     public static void runTokenizer() throws FileNotFoundException {
 
-        String target = new Scanner(new File("C:\\Users\\Lenovo\\IdeaProjects\\Compilers Phase 2\\src\\input.txt")).useDelimiter("\\Z").next();
+        String target = new Scanner(new File("/Users/Eslam/Desktop/Projects/CFG-Parse-Tree/src/input.txt")).useDelimiter("\\Z").next();
 
-        Scanner s = new Scanner(new File("C:\\Users\\Lenovo\\IdeaProjects\\Compilers Phase 2\\src\\LexicalAnalyzer\\RE.txt"));
+        Scanner s = new Scanner(new File("/Users/Eslam/Desktop/Projects/CFG-Parse-Tree/src/LexicalAnalyzer/RE.txt"));
 
         ArrayList<Match> matches = new ArrayList<>();
         ArrayList<Match> allMatches = new ArrayList<>();
@@ -69,7 +69,7 @@ public class Tokenizer {
         }
 
         allMatches.sort((Match o1, Match o2) -> o1.startPosition - o2.startPosition);
-        PrintWriter writer = new PrintWriter("C:\\Users\\Lenovo\\IdeaProjects\\Compilers Phase 2\\src\\output.txt");
+        PrintWriter writer = new PrintWriter("/Users/Eslam/Desktop/Projects/CFG-Parse-Tree/src/output.txt");
 
         for (int i = 0; i < allMatches.size(); i++) {
 
@@ -82,8 +82,11 @@ public class Tokenizer {
             buf.replace(allMatches.get(i).startPosition, allMatches.get(i).endPosition, temp);
             target = buf.toString();
 
-            if (allMatches.get(i).token.equals("EOL")) {
-                allMatches.get(i).value = "\\n";
+            if (allMatches.get(i).token.equals("EOL") || allMatches.get(i).token.equals("S_COMMENTS") 
+                    ||  allMatches.get(i).token.equals("M_COMMENTS") ) {
+                
+                if(allMatches.get(i).token.equals("EOL"))
+                    allMatches.get(i).value = "\\n";
                 continue;
             }
             writer.println(""+allMatches.get(i).token+" : " + allMatches.get(i).value);

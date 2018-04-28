@@ -1,23 +1,15 @@
-class foo {
-	public static void main (String [] args){
-		{
-			{}
-			if (1 <= 0)
-				while(x < y)
-					{
-						bobo = soso;
-					}
-			else {
-				System.out.println(khokha);
-				bobo[x+2] = soso*2;
-			}
+/* HelloWorld.java */
 
-			soso [new int[0]] = true.x((!bobo), false, this);
-		}
-
-
+class HelloWorld
+{
+	public static void main(String[] args) {
+		
+		if( y  == 3)
+		System.out.println(x+2);
+                    
+		if( y[1] != 5)
+		 x = 5;
+		else
+		 x [0]= 10;
 	}
-
 }
-
-class kdkdkkdkd

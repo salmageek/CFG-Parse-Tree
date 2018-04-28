@@ -100,6 +100,7 @@ public class Statement_R implements Node {
             
             if(statement != null)
               statement.printNode();
+            if(elseStatement != null)
             elseStatement.printNode();
 
         } else if (type.equals("while statement")) {
