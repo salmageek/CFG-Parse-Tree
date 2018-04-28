@@ -93,7 +93,6 @@ public class Statement_R implements Node {
 
         } else if (type.equals("if statement")) {
             System.out.print(token1.value + " " + token2.value);
-            
             if(expression != null)
                 expression.printNode();
             System.out.println(token3.value);

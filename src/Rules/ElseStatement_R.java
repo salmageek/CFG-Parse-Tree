@@ -15,7 +15,7 @@ public class ElseStatement_R implements Node {
 
     @Override
     public void printNode() {
-        System.out.print(token.value);
+        System.out.println(token.value);
         statement.printNode();
     }
 }

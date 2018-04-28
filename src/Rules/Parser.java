@@ -26,12 +26,12 @@ public class Parser {
         Tokenizer t = new Tokenizer();
         t.runTokenizer();
 
-        Scanner scanner = new Scanner(new File("/Users/Eslam/Desktop/Projects/CFG-Parse-Tree/src/output.txt"));
+        Scanner scanner = new Scanner(new File("C:\\Users\\Lenovo\\IdeaProjects\\Compilers Phase 2\\src\\output.txt"));
         while (scanner.hasNext()) {
             String token = scanner.next();
             scanner.next();
             String value = scanner.nextLine();
-            Match m = new Match(token, value, 0, 0, 0);
+            Match m = new Match(token, value.substring(1), 0, 0, 0);
             this.queue.add(m);
         }
     }
@@ -551,7 +551,6 @@ public class Parser {
         }
         return null;
     }
-
 
     // ====================== Statement ====================== //
 
@@ -1210,7 +1209,7 @@ public class Parser {
                                                             System.out.println("Syntax Error! stmt in main class is null");
                                                             return null;
                                                         }
-                                                        Match token13 = queue.peek();//should peek }
+                                                        Match token13 = queue.peek(); //should peek }
                                                         if (token13 == null) {
                                                             System.out.println("Syntax Error! } after statement is null");
                                                             return null;
@@ -1232,6 +1231,7 @@ public class Parser {
                                                                 System.out.println("Syntax Error! } after } is missing");
                                                             }
                                                         } else {
+                                                            System.out.println("============>" + queue.peek().value);
                                                             System.out.println("Syntax Error! } after stmt is missing");
                                                             stmt.printNode();
                                                             return null;
@@ -1353,6 +1353,7 @@ public class Parser {
         Goal_R root = p.goal();
         //MainClass_R root = p.mainClass();
         //ClassDeclaration_R root2 = p.classDeclaration();
+//        Statement_R s = p.statement();
         if (root != null)
             root.printNode();
 
